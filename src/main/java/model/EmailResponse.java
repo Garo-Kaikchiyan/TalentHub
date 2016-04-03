@@ -48,43 +48,26 @@ public class EmailResponse {
 
 	      try {
 
-	         // Create a default MimeMessage object.
 	         Message message = new MimeMessage(session);
 
-	         // Set From: header field of the header.
 	         message.setFrom(new InternetAddress(from, "Team TalentHub"));
-
-	         // Set To: header field of the header.
 	         message.setRecipients(Message.RecipientType.TO,
 	            InternetAddress.parse(toAdress));
-
-	         // Set Subject: header field
 	         message.setSubject(subject);
-
-	         // This mail has 2 part, the BODY and the embedded image
 	         MimeMultipart multipart = new MimeMultipart("related");
-
-	         // first part (the html)
 	         BodyPart messageBodyPart = new MimeBodyPart();
-	         String htmlText = "<H4>"+text+"</H4><br><br>----------------------<br>The Talent Hub team<br><img src=\"cid:image\">";
+	         String htmlText = "<H4>"+text+"</H4><br><br>------------------------<br>The Talent Hub team<br><img src=\"cid:image\">";
 	         messageBodyPart.setContent(htmlText, "text/html");
-	         // add it
 	         multipart.addBodyPart(messageBodyPart);
-
-	         // second part (the image)
 	         messageBodyPart = new MimeBodyPart();
 	         DataSource fds = new FileDataSource(
-	            "src/main/webapp/static/img/logo-black.png");
+	        		 "src/main/webapp/static/images/logo-black.png");
 
 	         messageBodyPart.setDataHandler(new DataHandler(fds));
 	         messageBodyPart.setHeader("Content-ID", "<image>");
 
-	         // add image to the multipart
 	         multipart.addBodyPart(messageBodyPart);
-
-	         // put everything together
 	         message.setContent(multipart);
-	         // Send message
 	         Transport.send(message);
 
 	         return true;
