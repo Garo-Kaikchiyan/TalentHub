@@ -25,7 +25,7 @@
 </div>
 	<form action="login" method="post">
 		<div class="header">
-			<div id="logo" class="header"><a href="index.html"><img src="img/logo.png"/></a> </div>
+			<div id="logo" class="header"><a href="index"><img src="img/logo.png"/></a> </div>
 				<div id="form1" class="header">
 					Email<br>
 					<c:if test=""></c:if>
@@ -37,14 +37,14 @@
 				<div id="form2" class="header">
 					Password<br>
 					<input placeholder="Password" type="password" name="password"/>
-					 <a href="/TalentHub/forgottenPassword"><br>Forgotten my password</a>
+					 <a href="forgottenPassword"><br>Forgotten my password</a>
 				</div> 
 		</div>
 		<input type="submit" class="submit1" value="login" name ="loginButton"/>
 	</form>
 <div class="bodyx">
 	<form action="register" method="post">
-		<div id="intro1" class="bodyx">TalentHub -<br> Share your ideas!</div>
+		<div id="intro1" class="bodyx">TalentsHub -<br> Share your ideas!</div>
 		<div id="intro2" class="bodyx">Create an account</div> 
 		<div id="img2" class="bodyx"><img src = "img/community.png"/></div>
 		<div id="form3" class="bodyx">

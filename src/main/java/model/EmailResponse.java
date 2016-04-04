@@ -15,6 +15,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 public class EmailResponse {
 	
 	private static final String from = "garomaildemo@gmail.com";
@@ -30,7 +32,7 @@ public class EmailResponse {
 		return instance;
 	}
 	
-	public boolean SendEmail(String toAdress, String subject, String text){
+	public boolean SendEmail(String toAdress, String subject, String text, HttpServletRequest req){
 		
 
 	      Properties props = new Properties();
@@ -60,8 +62,10 @@ public class EmailResponse {
 	         messageBodyPart.setContent(htmlText, "text/html");
 	         multipart.addBodyPart(messageBodyPart);
 	         messageBodyPart = new MimeBodyPart();
+
+	         
 	         DataSource fds = new FileDataSource(
-	        		 "src/main/webapp/static/images/logo-black.png");
+	        		 req.getServletContext().getRealPath("") + "/static/images/logo-black.png");
 
 	         messageBodyPart.setDataHandler(new DataHandler(fds));
 	         messageBodyPart.setHeader("Content-ID", "<image>");

@@ -33,7 +33,7 @@ public class IndexController {
 			String text = "Hello " + req.getParameter("firstName").toString() + 
 					" !<br>You are successfully registrated at TalentHub";
 			System.out.println(req.getParameter("email").toString());
-			EmailResponse.getInstance().SendEmail(req.getParameter("email").toString(), "Welcome to TalentHub!", text);
+			EmailResponse.getInstance().SendEmail(req.getParameter("email").toString(), "Welcome to TalentHub!", text, req);
 			return "main";
 		}
 		else{
