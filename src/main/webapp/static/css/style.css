@@ -22,6 +22,7 @@ height:1000px}
 	color:black;
 	z-index:7;
 	font-family:verdana;
+	text-decoration:bold;
 }
 #logo {left: 100px;
 height:50px;
@@ -37,6 +38,8 @@ width:180px;
 top:20px;
 height:60px;
 width:200px;
+text-decoration: initial;
+ color: black;
 }
 .submit1{
 	left:1100px;
@@ -45,9 +48,8 @@ width:200px;
 	color:0099FF;
 	position:fixed;
 	z-index:20;
-	height:22px;
-	width:50px;
 	cursor:pointer;
+	border:none;
 }
 .bodyx{
 	position:absolute;
@@ -124,3 +126,5 @@ height:495px;
 	cursor:pointer;
 	outline:none;
 }
+
+    
