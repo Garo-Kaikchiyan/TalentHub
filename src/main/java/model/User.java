@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class User {
 	private String firstName, lastName, email, password, gender;

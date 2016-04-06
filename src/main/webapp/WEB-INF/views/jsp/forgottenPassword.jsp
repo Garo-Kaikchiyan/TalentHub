@@ -20,7 +20,7 @@
 </div>
 <input type="submit" class="submit1" value="login"/>
 	<div class="bodyx">
-		<form action="/passwordReset" method="post">
+		<form action="passwordReset" method="post">
 			<div id="form4" class="bodyx">
 			Enter your email and you will receive your password.
 				<input placeholder="Email" type="text" id="mailbox" name="email" /><br>

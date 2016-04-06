@@ -73,7 +73,7 @@ public class EmailResponse {
 	         multipart.addBodyPart(messageBodyPart);
 	         message.setContent(multipart);
 	         Transport.send(message);
-
+	         System.out.println("Mail send to " + toAdress);
 	         return true;
 
 	      } catch (MessagingException e) {
