@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import model.dao.IUserDAO;
 import model.dao.IUserDAO.DataSource;
+import model.db.DBManager;
 import model.EmailResponse;
 import model.User;
 
@@ -23,8 +24,11 @@ public class IndexController {
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public String login(HttpServletRequest req, Model model){
-		if (validateUser(req.getParameter("email").toString(), req.getParameter("password").toString()))
+		User u = IUserDAO.getDAO(DataSource.DB).validateUser(req.getParameter("email"), req.getParameter("password"));
+		if (u != null){
+			req.getSession().setAttribute("loggedUser", u);
 			return "main";
+		}
 		else{
 			model.addAttribute("invalidUser", "Invalid e-mail or password");
 			return "index";
@@ -95,6 +99,9 @@ public class IndexController {
 			return "Please enter your last name";
 		if(req.getParameter("email").toString().equals(""))	
 			return "Please enter your e-mail address";
+		else if(!IUserDAO.getDAO(DataSource.DB).validateUser(req.getParameter("email").toString())){
+			return "E-mail already in use";
+		}
 		if(req.getParameter("email2").toString().equals(""))	
 			return "Please confirm your e-mail address";
 		if(!req.getParameter("email").toString().equals(req.getParameter("email2").toString()))
@@ -103,7 +110,8 @@ public class IndexController {
 			return "Password must be 8 symbols or longer";
 		return "";
 	}
-	private boolean validateUser(String email, String pass) {
-		return false;
+	
+	private boolean validateUser(String email) {
+		return IUserDAO.getDAO(DataSource.DB).validateUser(email);
 	}
 }
