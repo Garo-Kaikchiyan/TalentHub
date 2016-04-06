@@ -28,7 +28,6 @@
 			<div id="logo" class="header"><a href="index"><img src="img/logo.png"/></a> </div>
 				<div id="form1" class="header">
 					Email<br>
-					<c:if test=""></c:if>
 					<input placeholder="Email" type="email" name="email" value ="${loginEmail}" onblur="validateEmail(this,'loginButton');"/><br>
 					<input type="checkbox" /> 
 					Keep me logged in
@@ -53,7 +52,7 @@
 			<input placeholder="Email" type="text" id="mailbox" name="email" value="${regEmail}" onblur="validateEmail(this,'regButton')"/><br>
 			<input placeholder="Re-enter email" type="text" id="mailbox" name="email2" /><br>
 			<input placeholder="Password" type="password" id="mailbox" name="pass" /><br>
-			<input type="date" id="namebox"/><br><br>
+			<input type="date" id="namebox" name="bDay"/><br><br>
 			<input type="radio" name="sex" value="male"/> Male
 			<input type="radio" name="sex" value="female"/> Female<br>
 			<label style="font-size:medium; color: red" >${errMsg}</label><br>

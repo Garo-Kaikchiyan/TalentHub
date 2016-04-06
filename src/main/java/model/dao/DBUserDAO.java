@@ -1,11 +1,11 @@
 package model.dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import model.User;
@@ -26,17 +26,17 @@ class DBUserDAO implements IUserDAO {
 			instance = new DBUserDAO();
 		return instance;
 	}
-
 	@Override
 	public boolean addUser(User newUser) {
 		boolean success = true;
-		String query = "INSERT INTO team_project.users ( email, password, first_name, last_name) VALUES (?, ?, ?, ?, ?);";
+		String query = "INSERT INTO talenthub.users (user_email, user_password, first_name, last_name, gender, birth_date) VALUES (?, SHA1(?), ?, ?, ?, ?);";
 		try(PreparedStatement st = manager.getConnection().prepareStatement(query);) {
 			st.setString(1, newUser.getEmail());
 			st.setString(2, newUser.getPassword());
 			st.setString(3, newUser.getFirstName());
 			st.setString(4, newUser.getLastName());
-			//date of birth
+			st.setString(5, newUser.getGender());
+			st.setDate(6, newUser.getBirth());
 			st.execute();
 			} catch (SQLException e) {
 			success = false;
@@ -46,7 +46,7 @@ class DBUserDAO implements IUserDAO {
 
 	@Override
 	public List<User> getAllUsers() throws SQLException{
-		String query = "SELECT first_name, last_name, email, password, birth FROM users;";
+		String query = "SELECT first_name, last_name, email, SHA1(password), gender, birth_date FROM users;";
 		List<User> users = new ArrayList<>();
 		Statement st = manager.getConnection().createStatement();
 		ResultSet result = st.executeQuery(query);
@@ -61,7 +61,7 @@ class DBUserDAO implements IUserDAO {
 					          result.getString(3),
 					          result.getString(4),
 					          result.getString(5),
-					          new Date());
+					          result.getDate(6));
 			System.out.println("user added");
 			users.add(u);
 		}

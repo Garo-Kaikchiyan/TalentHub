@@ -8,7 +8,7 @@ public class DBManager {
 
 	private static DBManager instance;
 	
-	public static final String DB_NAME = "team_project";
+	public static final String DB_NAME = "talenthub";
 	
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/" + DB_NAME;
 	private static final String DB_USER = "root";

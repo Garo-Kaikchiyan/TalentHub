@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.sql.Date;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,11 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import model.dao.IUserDAO;
+import model.dao.IUserDAO.DataSource;
 import model.EmailResponse;
+import model.User;
 
 @Controller
 public class IndexController {
+	
 	@RequestMapping(value="/index", method = RequestMethod.GET)
 	public String sayHello() {
 		return "index";
@@ -30,10 +34,12 @@ public class IndexController {
 	public String registerUser(HttpServletRequest req, Model model){
 		String errMsg = validateRegistration(req, model);
 		if(errMsg.equals("")){
+			User u = createUser(req);
+			IUserDAO.getDAO(DataSource.DB).addUser(u);
 			String text = "Hello " + req.getParameter("firstName").toString() + 
 					" !<br>You are successfully registrated at TalentHub";
-			System.out.println(req.getParameter("email").toString());
 			EmailResponse.getInstance().SendEmail(req.getParameter("email").toString(), "Welcome to TalentHub!", text, req);
+			req.getSession().setAttribute("loggedUser", u);
 			return "main";
 		}
 		else{
@@ -42,6 +48,17 @@ public class IndexController {
 			return "index";
 		}
 	}
+	private User createUser(HttpServletRequest req) {
+		String email = req.getParameter("email").toString();
+		String firstName = req.getParameter("firstName").toString();
+		String lastName = req.getParameter("lastName").toString();
+		String password = req.getParameter("pass").toString();
+		String gender = req.getParameter("sex").toString();
+		Date birthDate =  Date.valueOf(req.getParameter("bDay"));
+		return new User(firstName, lastName, email, password, gender, birthDate);
+		
+	}
+
 	@RequestMapping(value="/forgottenPassword", method = RequestMethod.GET)
 	public String resetPassGet(){
 		return "forgottenPassword";
@@ -59,9 +76,9 @@ public class IndexController {
 			}
 			String pass = new String(newPass);
 			System.out.println("New pass " + pass);
-			//EmailResponse.getInstance().SendEmail(req.getParameter("email").toString(), "Password reset", "Hello user,<br>Your new password is: " + pass);
+			EmailResponse.getInstance().SendEmail(req.getParameter("email").toString(), "Password reset", "Hello user,<br>Your new password is: " + pass, req);
 			//DBManager call to change pass
-			return "resetSuccess";
+			return "redirect:/html/generatedPassword.html";
 		//else
 			 
 	}
