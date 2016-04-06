@@ -26,5 +26,7 @@ public interface IUserDAO {
 	}
 
 	void updateUser(User loggedUser);
+	User validateUser(String email, String pass);
+	boolean validateUser(String email);
 }
 

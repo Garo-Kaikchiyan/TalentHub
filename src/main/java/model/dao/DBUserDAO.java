@@ -84,4 +84,52 @@ class DBUserDAO implements IUserDAO {
 		}
 	}
 
+	@Override
+	public User validateUser(String email, String pass) {
+		String query = "SELECT first_name, last_name, user_email, gender, birth_date  FROM users WHERE user_password =SHA1('" + pass + "');";
+		Statement st;
+		try {
+			st = manager.getConnection().createStatement();
+			ResultSet result = st.executeQuery(query);
+			if(result == null){
+				System.out.println("null user");
+				return null;
+			}
+			else{
+				result.next();
+				if(result.getString(3).equals(email)){
+					User u = new User(result.getString(1),
+							  result.getString(2),
+					          result.getString(3),
+					          pass,
+					          result.getString(4),
+					          result.getDate(5));
+					return u;
+				}
+			}
+			return null;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error @ validateUser(String, String) ");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public boolean validateUser(String email) {
+		String query = "SELECT user_email FROM users WHERE user_email ='" + email + "';";
+		Statement st;
+		try {
+			st = manager.getConnection().createStatement();
+			ResultSet result = st.executeQuery(query);
+			return !result.next();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error @ validateUser(String) ");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }
