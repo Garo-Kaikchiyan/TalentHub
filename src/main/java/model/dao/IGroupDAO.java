@@ -13,7 +13,6 @@ public interface IGroupDAO {
 	}
 	
 	boolean addGroup(User newUser,Group group);
-	List<Post> getAllPosts(Group group) throws SQLException;
 	
 	
 	static IGroupDAO getDAO(DataSource ds) {
@@ -25,7 +24,6 @@ public interface IGroupDAO {
 		}
 	}
 	
-	boolean addPost(User user,Group group,Post post);
 	
 	
 }

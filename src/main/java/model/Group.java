@@ -7,7 +7,7 @@ public class Group {
 	private String user_created;
 	private ArrayList<User> members;
 	private String message;
-	
+
 	public Group(String group_name) {
 		super();
 		this.group_name = group_name;
@@ -20,6 +20,5 @@ public class Group {
 	public void setGroup_name(String group_name) {
 		this.group_name = group_name;
 	}
-	
-	
+
 }

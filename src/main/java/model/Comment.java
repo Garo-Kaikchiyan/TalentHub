@@ -2,48 +2,58 @@ package model;
 
 import java.sql.Date;
 
-public class Post {
+public class Comment {
+	private int comment_id;
 	private int post_id;
 	private String user_email;
-	private String post_title;
-	private String post;
+	private String text;
 	private Date date_created;
-	public Post(String user_email, String post_title, String post) {
+
+	public Comment(int post_id, String user_email, String text) {
 		super();
+		this.post_id = post_id;
 		this.user_email = user_email;
-		this.post_title = post_title;
-		this.post = post;
+		this.text = text;
 	}
+
+	public int getComment_id() {
+		return comment_id;
+	}
+
+	public void setComment_id(int comment_id) {
+		this.comment_id = comment_id;
+	}
+
 	public int getPost_id() {
 		return post_id;
 	}
+
 	public void setPost_id(int post_id) {
 		this.post_id = post_id;
 	}
+
+	public String getText() {
+		return text;
+	}
+
 	public String getUser_email() {
 		return user_email;
 	}
+
 	public void setUser_email(String user_email) {
 		this.user_email = user_email;
 	}
-	public String getPost_title() {
-		return post_title;
+
+	public void setText(String text) {
+		this.text = text;
 	}
-	public void setPost_title(String post_title) {
-		this.post_title = post_title;
-	}
-	public String getPost() {
-		return post;
-	}
-	public void setPost(String post) {
-		this.post = post;
-	}
+
 	public Date getDate_created() {
 		return date_created;
 	}
+
 	public void setDate_created(Date date_created) {
 		this.date_created = date_created;
 	}
-	
-	
+
 }
