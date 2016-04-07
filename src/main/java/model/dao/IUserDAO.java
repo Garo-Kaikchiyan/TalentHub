@@ -25,7 +25,8 @@ public interface IUserDAO {
 		}
 	}
 
-	void updateUser(User loggedUser);
+	boolean updateUser(User loggedUser);
+	boolean changeUserPass(String email, String pass);
 	User validateUser(String email, String pass);
 	boolean validateUser(String email);
 }
