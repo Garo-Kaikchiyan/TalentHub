@@ -12,8 +12,8 @@
 <link
 	href="https://fontastic.s3.amazonaws.com/koZpYWicqpccnhbmDcBiTG/icons.css"
 	rel="stylesheet">
-<link rel="stylesheet" href="../css/normalize.css">
-<link rel="stylesheet" href="../css/style1.css">
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/style1.css">
 </head>
 <body>
 	<div class="headerx"></div>

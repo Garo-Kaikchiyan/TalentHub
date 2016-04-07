@@ -25,25 +25,25 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#63b8ee",endColorstr="#468ccf");
 }
 #btn1 {
-	background: url('../images/Java_Logo.jpg');
+	background-image: url('../images/Java_Logo.jpg');
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
 }
 #btn2 {
-	background: url('../images/android-logo.jpg');
+	background-image: url('../images/android-logo.jpg');
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
 }
  #btn3 {
-	background: url('../images/php_fesh_logo.png');
+	background-image: url('../images/php_fesh_logo.png');
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
 }
 #btn4 {
-	background: url('../images/javascript_logo.png');
+	background-image: url('../images/javascript_logo.png');
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
@@ -51,7 +51,7 @@
 #btn5 {
 	width:400px;
 	height:150px;
-	background: url('../images/forum.png');
+	background-image: url(forum.png);
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
@@ -59,7 +59,7 @@
 #btn6 {
 	width:400px;
 	height:150px;
-	background: url('/TalentHub/src/main/webapp/static/images/groups.jpg');
+	background-image: url(groups.jpg);
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
