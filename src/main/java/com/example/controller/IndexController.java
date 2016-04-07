@@ -86,6 +86,48 @@ public class IndexController {
 		//else
 			 
 	}
+	
+	@RequestMapping(value="/myProfile", method = RequestMethod.POST)
+	public String myProfile(HttpServletRequest req, Model model){
+		req.getSession().removeAttribute("loggedUser");
+			return "changeProfile";
+		}
+	
+	
+	
+	@RequestMapping(value="/logout", method = RequestMethod.POST)
+	public String logout(HttpServletRequest req, Model model){
+		req.getSession().removeAttribute("loggedUser");
+			return "index";
+		}
+	
+	@RequestMapping(value="/changeProfile", method = RequestMethod.POST)
+	public String changeProfile(HttpServletRequest req, Model model){
+		User u = (User) req.getSession().getAttribute("loggedUser");
+		if(req.getParameter("mail") != null) {
+			String mail = req.getParameter("mail");
+			u.setEmail(mail);
+		}
+	/*	if(req.getParameter("password") != null) {
+			String password = req.getParameter("password");
+			u.setPassword(password);
+		}
+		if(req.getParameter("twitter_account") != null) {
+			String twitterAccount = req.getParameter("twitter_account");
+			u.setTwitterAccount(twitterAccount);
+		}
+		if(req.getParameter("github_account") != null) {
+			String githubAccount = req.getParameter("github_account");
+			u.setGitHubAccount(githubAccount);
+		}
+		if(req.getParameter("stackoverflow_account") != null) {
+			String stackoverflowAccount = req.getParameter("stackoverflow_account");
+			u.setStackOverflowAccount(stackoverflowAccount);
+		} */
+		return "main";
+		
+		
+	}
 	private void setFieldValues(Model model, HttpServletRequest req) {
 		model.addAttribute("firstName", req.getParameter("firstName").toString());
 		model.addAttribute("lastName", req.getParameter("lastName").toString());

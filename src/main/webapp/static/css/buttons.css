@@ -49,15 +49,17 @@
 	background-position: center center;
 } 
 #btn5 {
+	width:400px;
+	height:150px;
 	background: url('../images/forum.png');
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
 } 
 #btn6 {
-	width:600px;
-	height:300px;
-	background: url('../images/groups.jpg');
+	width:400px;
+	height:150px;
+	background: url('/TalentHub/src/main/webapp/static/images/groups.jpg');
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
