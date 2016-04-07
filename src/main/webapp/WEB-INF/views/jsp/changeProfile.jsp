@@ -8,24 +8,29 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>My Profile</title>
 <link type="text/css" rel="stylesheet" href="css/style.css" />
+<link type="text/css" rel="stylesheet" href="css/bootstrap.css" />
 </head>
 <body>
 	<div class="headerx"></div>
 	<div class="header">
 		<div id="logo" class="header">
-			<a href="index.html"><img src="img/logo.png" /></a>
+			<a href="main.htm"><img src="img/logo.png" /></a>
 		</div>
 		<div id="form2" class="header">
-			&nbsp; <br> <a href="myProfile.html">My Profile</a><br>
+		<form action="myProfile.htm" method="get">
+			&nbsp; <br> <a href="myProfile.htm" class="btn btn-primary btn-xs">My profile</a><br>
+			</form>
 		</div>
-		<input type="submit" class="submit1" value="Logout" />
+		<form action="logout.htm" method="post">
+		<a href="logout.htm" class="submit1 btn btn-primary btn-xs">Logout</a>
+		</form>
 	</div>
 	<div class="bodyx">
 		<div id="form4" class="bodyx">
 		<form action=changeProfile method="post">
-			Change your: <input placeholder="Email" type="text" id="mailbox"
-				name="mail" /><br> <input placeholder="Password" type="text"
-				id="mailbox" name="password" /><br> <input
+			Change your: <input placeholder="Password" type="text"
+				id="mailbox" name="password" value="${password}"/><br>
+				  <input
 				placeholder="Twitter account" type="text" id="mailbox"
 				name="twitter_account" /><br> <input
 				placeholder="Github account" type="text" id="mailbox"
@@ -33,11 +38,11 @@
 				placeholder="Stackoverflow account" type="text" id="mailbox"
 				name="stackoverflow_account" /><br>
 				<input type="submit" value="Submit">
+			</form>
 			<p>Choose your profile picture</p>
 			<form action="forum.html">
 				<input type="file" name="pic" accept="image/*"> <input
 					type="submit">
-			</form>
 			</form>
 		</div>
 	</div>

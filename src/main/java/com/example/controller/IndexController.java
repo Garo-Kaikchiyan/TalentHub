@@ -21,6 +21,11 @@ public class IndexController {
 	public String sayHello() {
 		return "index";
 	}
+	
+	@RequestMapping(value="/main.htm", method = RequestMethod.GET)
+	public String goToMain() {
+		return "main";
+	}
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public String login(HttpServletRequest req, Model model){
@@ -87,7 +92,7 @@ public class IndexController {
 			 
 	}
 	
-	@RequestMapping(value="/myProfile", method = RequestMethod.POST)
+	@RequestMapping(value="/myProfile.htm", method = RequestMethod.GET)
 	public String myProfile(HttpServletRequest req, Model model){
 		req.getSession().removeAttribute("loggedUser");
 			return "changeProfile";
@@ -101,18 +106,20 @@ public class IndexController {
 			return "index";
 		}
 	
+	@RequestMapping(value="/logout.htm", method = RequestMethod.GET)
+	public String logoutHtm(HttpServletRequest req, Model model){
+		req.getSession().removeAttribute("loggedUser");
+			return "index";
+		}
+	
 	@RequestMapping(value="/changeProfile", method = RequestMethod.POST)
 	public String changeProfile(HttpServletRequest req, Model model){
 		User u = (User) req.getSession().getAttribute("loggedUser");
-		if(req.getParameter("mail") != null) {
-			String mail = req.getParameter("mail");
-			u.setEmail(mail);
-		}
-	/*	if(req.getParameter("password") != null) {
+		if(req.getParameter("password") != null) {
 			String password = req.getParameter("password");
 			u.setPassword(password);
 		}
-		if(req.getParameter("twitter_account") != null) {
+		/*	if(req.getParameter("twitter_account") != null) {
 			String twitterAccount = req.getParameter("twitter_account");
 			u.setTwitterAccount(twitterAccount);
 		}
@@ -124,6 +131,8 @@ public class IndexController {
 			String stackoverflowAccount = req.getParameter("stackoverflow_account");
 			u.setStackOverflowAccount(stackoverflowAccount);
 		} */
+		IUserDAO.getDAO(DataSource.DB).updateUser(u);
+		req.getSession().setAttribute("loggedUser", u);
 		return "main";
 		
 		
