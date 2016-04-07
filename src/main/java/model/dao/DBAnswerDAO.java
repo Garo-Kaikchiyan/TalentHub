@@ -43,14 +43,15 @@ public class DBAnswerDAO	implements IAnswerDAO {
 	@Override
 	public ArrayList<Answer> getAllAnswers(Question question) throws SQLException {
 		ArrayList<Answer> answersForQuestion = new ArrayList<>();
-		String query="SELECT user_email,answer_text,date_created,likes FROM talenthub.Answers WHERE question_title=?";
+		String query="SELECT answer_id,user_email,answer_text,date_created,likes FROM talenthub.Answers WHERE question_title=?";
 		PreparedStatement st=manager.getConnection().prepareStatement(query);
 		st.setString(1, question.getQuestion_title());
 		ResultSet rs=st.executeQuery();
 		while(rs.next()){
-			Answer a=new Answer(question.getQuestion_title(),rs.getString(1),rs.getString(2));
-			a.setDate_created(rs.getDate(3));
-			a.setLikes(rs.getInt(4));
+			Answer a=new Answer(question.getQuestion_title(),rs.getString(2),rs.getString(3));
+			a.setDate_created(rs.getDate(4));
+			a.setLikes(rs.getInt(5));
+			a.setAnswer_id(rs.getInt(1));
 			answersForQuestion.add(a);
 		}
 		st.close();
@@ -72,5 +73,31 @@ public class DBAnswerDAO	implements IAnswerDAO {
 		}
 		st.close();
 		return answersForUser;	}
-
+	
+	public void vote(Answer answer,User newUser,boolean vote) throws SQLException{
+		//adding the vote to DB
+		String query="INSERT INTO talenthub.Votes (answer_id,user_email,votes) VALUES (?,?,?);";
+		PreparedStatement st=manager.getConnection().prepareStatement(query);
+		st.setInt(1, answer.getAnswer_id());
+		st.setString(2, newUser.getEmail());
+		st.setBoolean(3, vote);
+		st.execute();
+		
+		//getting the total votes to calculate the new sum
+		String calc="SELECT votes FROM talenthub.Votes WHERE answer_id=?;";
+		st=manager.getConnection().prepareStatement(calc);
+		st.setInt(1, answer.getAnswer_id());
+		ResultSet rs=st.executeQuery();
+		int votes=0;
+		while(rs.next()){
+			if(rs.getBoolean(1)) 
+				votes++;
+			else votes--;
+		}
+		answer.setLikes(votes);
+		String update="UPDATE talenthub.Answers SET votes=?;";
+		st=manager.getConnection().prepareStatement(update);
+		st.setInt(1, votes);
+		st.executeUpdate();
+	}
 }

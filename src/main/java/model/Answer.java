@@ -3,6 +3,8 @@ package model;
 import java.sql.Date;
 
 public class Answer {
+	
+	private int answer_id;
 	private String question_title;
 	private String user_email;
 	private String text;
@@ -47,6 +49,11 @@ public class Answer {
 	public void setLikes(int likes) {
 		this.likes = likes;
 	}
-	
+	public int getAnswer_id() {
+		return answer_id;
+	}
+	public void setAnswer_id(int answer_id) {
+		this.answer_id = answer_id;
+	}
 	
 }
