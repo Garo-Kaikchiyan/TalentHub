@@ -38,7 +38,8 @@ public class DBQuestionDAO implements IQuestionDAO {
 		}
 		return success;
 	}
-
+	
+	
 	@Override
 	public ArrayList<Question> getAllPosts(User newUser) throws SQLException {
 		ArrayList<Question> questionsFromUser = new ArrayList<>();
@@ -53,6 +54,23 @@ public class DBQuestionDAO implements IQuestionDAO {
 		}
 		st.close();
 		return questionsFromUser;
+	}
+
+	@Override
+	public ArrayList<Question> getAllPosts(String forum_group) throws SQLException {
+		ArrayList<Question> questionsFromGroup=new ArrayList<>();
+		String query= "SELECT q.question_title,q.user_email,u.first_name,u.last_name,q.question_text,q.date_created FROM talenthub.Questions q, talenhub.Users u WHERE q.user_email=u.user_email AND q.forum_group=?;";
+		PreparedStatement st=manager.getConnection().prepareStatement(query);
+		st.setString(1, forum_group);
+		ResultSet rs=st.executeQuery();
+		while(rs.next()){
+			Question q=new Question(rs.getString(1),rs.getString(2),rs.getString(5));
+			q.setUser_name(rs.getString(3));
+			q.setUser_family(rs.getString(4));
+			q.setDate_created(rs.getDate(6));
+		}
+		st.close();
+		return questionsFromGroup;
 	}
 
 }
