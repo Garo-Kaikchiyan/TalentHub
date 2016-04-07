@@ -68,9 +68,8 @@ public class IndexController {
 		return "forgottenPassword";
 	}
 	@RequestMapping(value="/passwordReset", method = RequestMethod.POST)
-	public String resetPass(HttpServletRequest req){
-		//validate email
-			//if valid
+	public String resetPass(HttpServletRequest req, Model model){
+		if(!validateUser(req.getParameter("email").toString())){
 			char[] newPass = new char[8];
 			Random r = new Random();
 			for(int i=0; i < newPass.length; i++){
@@ -79,11 +78,12 @@ public class IndexController {
 					newPass[i] -= 32;
 			}
 			String pass = new String(newPass);
-			System.out.println("New pass " + pass);
-			EmailResponse.getInstance().SendEmail(req.getParameter("email").toString(), "Password reset", "Hello user,<br>Your new password is: " + pass, req);
-			//DBManager call to change pass
+			if(IUserDAO.getDAO(DataSource.DB).changeUserPass(req.getParameter("email").toString(), pass))
+				EmailResponse.getInstance().SendEmail(req.getParameter("email").toString(), "Password reset", "Hello user,<br>Your new password is: " + pass, req);
 			return "redirect:/html/generatedPassword.html";
-		//else
+		}
+		model.addAttribute("errMsg", "Invalid E-mail");
+		return "forgottenPassword";
 			 
 	}
 	private void setFieldValues(Model model, HttpServletRequest req) {
