@@ -71,16 +71,20 @@ class DBUserDAO implements IUserDAO {
 	}
 
 	@Override
-	public void updateUser(User loggedUser) {
-		String query = "UPDATE USERS SET password = ?, first_name = ?, last_name = ? WHERE username = ?;";
+	public boolean updateUser(User loggedUser) {
+		String query = "UPDATE USERS SET user_password = SHA1(?), first_name = ?, last_name = ?, gender = ?, birth_date = ? WHERE user_email = ?;";
 		try(PreparedStatement st = manager.getConnection().prepareStatement(query);) {
 			st.setString(1, loggedUser.getPassword());
 			st.setString(2, loggedUser.getFirstName());
 			st.setString(3, loggedUser.getLastName());
-			st.setString(4, loggedUser.getEmail());
+			st.setString(4, loggedUser.getLastName());
+			st.setDate(5, loggedUser.getBirth());
+			st.setString(6, loggedUser.getEmail());
 			st.execute();
+			return true;
 			} catch (SQLException e) {
 				System.out.println("failed update");
+				return false;
 		}
 	}
 
@@ -129,6 +133,20 @@ class DBUserDAO implements IUserDAO {
 			System.out.println("Error @ validateUser(String) ");
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	@Override
+	public boolean changeUserPass(String email, String pass) {
+		String query = "UPDATE USERS SET user_password = SHA1(?) WHERE user_email = ?;";
+		try(PreparedStatement st = manager.getConnection().prepareStatement(query);) {
+			st.setString(1, pass);
+			st.setString(2, email);
+			st.execute();
+			return true;
+			} catch (SQLException e) {
+				System.out.println("failed update");
+				return false;
 		}
 	}
 

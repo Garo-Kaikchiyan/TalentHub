@@ -21,6 +21,11 @@ public class IndexController {
 	public String sayHello() {
 		return "index";
 	}
+	
+	@RequestMapping(value="/main.htm", method = RequestMethod.GET)
+	public String goToMain() {
+		return "main";
+	}
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public String login(HttpServletRequest req, Model model){
@@ -68,9 +73,8 @@ public class IndexController {
 		return "forgottenPassword";
 	}
 	@RequestMapping(value="/passwordReset", method = RequestMethod.POST)
-	public String resetPass(HttpServletRequest req){
-		//validate email
-			//if valid
+	public String resetPass(HttpServletRequest req, Model model){
+		if(!validateUser(req.getParameter("email").toString())){
 			char[] newPass = new char[8];
 			Random r = new Random();
 			for(int i=0; i < newPass.length; i++){
@@ -79,12 +83,59 @@ public class IndexController {
 					newPass[i] -= 32;
 			}
 			String pass = new String(newPass);
-			System.out.println("New pass " + pass);
-			EmailResponse.getInstance().SendEmail(req.getParameter("email").toString(), "Password reset", "Hello user,<br>Your new password is: " + pass, req);
-			//DBManager call to change pass
+			if(IUserDAO.getDAO(DataSource.DB).changeUserPass(req.getParameter("email").toString(), pass))
+				EmailResponse.getInstance().SendEmail(req.getParameter("email").toString(), "Password reset", "Hello user,<br>Your new password is: " + pass, req);
 			return "redirect:/html/generatedPassword.html";
-		//else
+		}
+		model.addAttribute("errMsg", "Invalid E-mail");
+		return "forgottenPassword";
 			 
+	}
+	
+	@RequestMapping(value="/myProfile.htm", method = RequestMethod.GET)
+	public String myProfile(HttpServletRequest req, Model model){
+		req.getSession().removeAttribute("loggedUser");
+			return "changeProfile";
+		}
+	
+	
+	
+	@RequestMapping(value="/logout", method = RequestMethod.POST)
+	public String logout(HttpServletRequest req, Model model){
+		req.getSession().removeAttribute("loggedUser");
+			return "index";
+		}
+	
+	@RequestMapping(value="/logout.htm", method = RequestMethod.GET)
+	public String logoutHtm(HttpServletRequest req, Model model){
+		req.getSession().removeAttribute("loggedUser");
+			return "index";
+		}
+	
+	@RequestMapping(value="/changeProfile", method = RequestMethod.POST)
+	public String changeProfile(HttpServletRequest req, Model model){
+		User u = (User) req.getSession().getAttribute("loggedUser");
+		if(req.getParameter("password") != null) {
+			String password = req.getParameter("password");
+			u.setPassword(password);
+		}
+		/*	if(req.getParameter("twitter_account") != null) {
+			String twitterAccount = req.getParameter("twitter_account");
+			u.setTwitterAccount(twitterAccount);
+		}
+		if(req.getParameter("github_account") != null) {
+			String githubAccount = req.getParameter("github_account");
+			u.setGitHubAccount(githubAccount);
+		}
+		if(req.getParameter("stackoverflow_account") != null) {
+			String stackoverflowAccount = req.getParameter("stackoverflow_account");
+			u.setStackOverflowAccount(stackoverflowAccount);
+		} */
+		IUserDAO.getDAO(DataSource.DB).updateUser(u);
+		req.getSession().setAttribute("loggedUser", u);
+		return "main";
+		
+		
 	}
 	private void setFieldValues(Model model, HttpServletRequest req) {
 		model.addAttribute("firstName", req.getParameter("firstName").toString());
