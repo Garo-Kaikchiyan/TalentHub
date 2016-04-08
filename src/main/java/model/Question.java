@@ -5,9 +5,11 @@ import java.sql.Date;
 public class Question {
 	private String question_title;
 	private String user_email;
+	private String user_name;
+	private String user_family;
 	private String question_text;
 	private Date date_created;
-
+	
 	public Question(String question_title, String user_email, String question_text) {
 		super();
 		this.question_title = question_title;
@@ -47,4 +49,21 @@ public class Question {
 		this.question_text = question_text;
 	}
 
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	public String getUser_family() {
+		return user_family;
+	}
+
+	public void setUser_family(String user_family) {
+		this.user_family = user_family;
+	}
+	
+	
 }

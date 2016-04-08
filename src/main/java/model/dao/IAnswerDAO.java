@@ -14,6 +14,7 @@ public interface IAnswerDAO {
 	boolean addAnswer(Answer answer,Question question,User newUser);
 	ArrayList<Answer> getAllAnswers(Question question) throws SQLException;
 	ArrayList<Answer> getAllPosts(User newUser) throws SQLException;
+	public void vote(Answer answer,User newUser,boolean vote) throws SQLException;
 	
 	static IAnswerDAO getDAO(DataSource ds) {
 		switch (ds) {
