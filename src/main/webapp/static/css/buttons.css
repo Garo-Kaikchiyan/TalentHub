@@ -25,25 +25,25 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#63b8ee",endColorstr="#468ccf");
 }
 #btn1 {
-	background-image: url('../images/Java_Logo.jpg');
+	background-image: url(Java_Logo.jpg);
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
 }
 #btn2 {
-	background-image: url('../images/android-logo.jpg');
+	background-image: url(android-logo.jpg);
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
 }
  #btn3 {
-	background-image: url('../images/php_fesh_logo.png');
+	background-image: url(php_fesh_logo.png);
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
 }
 #btn4 {
-	background-image: url('../images/javascript_logo.png');
+	background-image: url(javascript_logo.png);
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: center center;
