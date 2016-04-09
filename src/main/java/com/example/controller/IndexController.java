@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,9 @@ import model.User;
 public class IndexController {
 	
 	@RequestMapping(value="/index", method = RequestMethod.GET)
-	public String sayHello() {
+	public String indexController(HttpServletRequest req) {
+		if(req.getAttribute("loggedUser") != null)
+			return "main";
 		return "index";
 	}
 	
@@ -57,16 +61,6 @@ public class IndexController {
 			return "index";
 		}
 	}
-	private User createUser(HttpServletRequest req) {
-		String email = req.getParameter("email").toString();
-		String firstName = req.getParameter("firstName").toString();
-		String lastName = req.getParameter("lastName").toString();
-		String password = req.getParameter("pass").toString();
-		String gender = req.getParameter("sex").toString();
-		Date birthDate =  Date.valueOf(req.getParameter("bDay"));
-		return new User(firstName, lastName, email, password, gender, birthDate);
-		
-	}
 
 	@RequestMapping(value="/forgottenPassword", method = RequestMethod.GET)
 	public String resetPassGet(){
@@ -92,26 +86,16 @@ public class IndexController {
 			 
 	}
 	
-	@RequestMapping(value="/myProfile.htm", method = RequestMethod.GET)
-	public String myProfile(HttpServletRequest req, Model model){
-		req.getSession().removeAttribute("loggedUser");
-			return "changeProfile";
-		}
-	
-	
-	
-	@RequestMapping(value="/logout", method = RequestMethod.POST)
-	public String logout(HttpServletRequest req, Model model){
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest req){
 		req.getSession().removeAttribute("loggedUser");
 			return "index";
 		}
-	
-	@RequestMapping(value="/logout.htm", method = RequestMethod.GET)
-	public String logoutHtm(HttpServletRequest req, Model model){
-		req.getSession().removeAttribute("loggedUser");
-			return "index";
-		}
-	
+
+	@RequestMapping(value="/changeProfile", method = RequestMethod.GET)
+	public String viewProfile(){
+		return "changeProfile";
+	}
 	@RequestMapping(value="/changeProfile", method = RequestMethod.POST)
 	public String changeProfile(HttpServletRequest req, Model model){
 		User u = (User) req.getSession().getAttribute("loggedUser");
@@ -160,6 +144,17 @@ public class IndexController {
 		if(req.getParameter("pass").toString().equals("") || req.getParameter("pass").toString().length() < 8)
 			return "Password must be 8 symbols or longer";
 		return "";
+	}
+	
+	private User createUser(HttpServletRequest req) {
+		String email = req.getParameter("email").toString();
+		String firstName = req.getParameter("firstName").toString();
+		String lastName = req.getParameter("lastName").toString();
+		String password = req.getParameter("pass").toString();
+		String gender = req.getParameter("sex").toString();
+		Date birthDate =  Date.valueOf(req.getParameter("bDay"));
+		return new User(firstName, lastName, email, password, gender, birthDate);
+		
 	}
 	
 	private boolean validateUser(String email) {

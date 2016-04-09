@@ -17,7 +17,7 @@
 			<a href="main.htm"><img src="img/logo.png" /></a>
 		</div>
 		<div id="form2" class="header">
-		<form action="myProfile.htm" method="get">
+		<form action="changeProfile" method="get">
 			&nbsp; <br> <a href="myProfile.htm" class="btn btn-primary btn-xs">My profile</a><br>
 			</form>
 		</div>
@@ -29,8 +29,8 @@
 		<div id="form4" class="bodyx">
 		<form action=changeProfile method="post">
 			Change your: <input placeholder="Password" type="text"
-				id="mailbox" name="password" value="${password}"/><br>
-				  <input
+				id="mailbox" name="password"/><br>
+				<input
 				placeholder="Twitter account" type="text" id="mailbox"
 				name="twitter_account" /><br> <input
 				placeholder="Github account" type="text" id="mailbox"

@@ -77,7 +77,7 @@ class DBUserDAO implements IUserDAO {
 			st.setString(1, loggedUser.getPassword());
 			st.setString(2, loggedUser.getFirstName());
 			st.setString(3, loggedUser.getLastName());
-			st.setString(4, loggedUser.getLastName());
+			st.setString(4, loggedUser.getGender());
 			st.setDate(5, loggedUser.getBirth());
 			st.setString(6, loggedUser.getEmail());
 			st.execute();

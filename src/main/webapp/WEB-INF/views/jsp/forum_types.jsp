@@ -35,12 +35,20 @@
 	<div class="bodyx">
 	
 		<div class="button-container">
-			<button id="btn1" class="css_button"></button>
-			<button id="btn2" class="css_button"></button>
+			<form action="javaForum" method="get">
+				<button id="btn1" class="css_button"></button>
+			</form>
+			<form action="androidForum" method="get">
+				<button id="btn2" class="css_button"></button>
+			</form>
 		</div>
 		<div class="button-container">
-			<button id="btn3" class="css_button"></button>
-			<button id="btn4" class="css_button"></button>
+			<form action="phpForum" method="get">
+				<button id="btn3" class="css_button"></button>
+			</form>
+			<form action="jsForum" method="get">
+				<button id="btn4" class="css_button"></button>
+			</form>
 		</div>
 	</div>
 

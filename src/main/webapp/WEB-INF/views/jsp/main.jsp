@@ -24,11 +24,11 @@
 		</div>
 		<div id="form2" class="header">
 		<form action="myProfile.htm" method="get">
-			&nbsp; <br> <a href="myProfile.htm" class="btn btn-primary btn-xs">My profile</a><br>
+			&nbsp; <br> <a href="changeProfile" class="btn btn-primary btn-xs">My profile</a><br>
 		</form>
 		</div>
 		<form action="logout.htm" method="post">
-		<a href="logout.htm" class="submit1 btn btn-primary btn-xs">Logout</a>
+		<a href="logout" class="submit1 btn btn-primary btn-xs">Logout</a>
 		</form>
 	</div>
 	<div class="bodyx">
