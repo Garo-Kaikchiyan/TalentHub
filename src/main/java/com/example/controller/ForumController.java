@@ -103,6 +103,11 @@ public class ForumController {
 		return "forum";
 	}
 	
+	@RequestMapping(value="/createTopic", method = RequestMethod.GET) 
+	public String createTopic(Model model) {
+		return "create_topic";
+	}
+	
 	
 
 }

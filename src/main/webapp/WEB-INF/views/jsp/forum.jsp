@@ -19,13 +19,17 @@
 	<div class="headerx"></div>
 	<div class="header">
 		<div id="logo" class="header">
-			<a href="index.html"><img src="img/logo.png" /></a>
+			<a href="main.htm"><img src="img/logo.png" /></a>
 		</div>
 		<div id="form2" class="header">
-			&nbsp; <br> <a href="myProfile.html">My Profile</a><br>
+			<form action="myProfile.htm" method="get">
+			&nbsp; <br> <a href="changeProfile" class="btn btn-primary btn-xs">My profile</a><br>
+			</form>
 		</div>
-		<input type="submit" class="submit1" value="Logout" />
-		</div>
+		<form action="logout.htm" method="post">
+		<a href="logout.htm" class="submit1 btn btn-primary btn-xs">Logout</a>
+		</form>
+	</div>
 	<br><br><br><br><br><br>
 	<table class="table table-striped table-hover ">
   <thead>
@@ -54,8 +58,12 @@
   </tbody>
 </table> 
 
-<a href="#" class="btn btn-primary" style="float:right">Create thread</a>
-<textarea placeholder="Remember, be nice!" cols="60" rows="5" style="float:center"></textarea>
+<a href="createTopic"  class="btn btn-primary" style="float:right">Create thread</a>
+<ul class="pager">
+  <li><a href="#">Previous</a></li>
+  <li><a href="#">Next</a></li>
+</ul>
+
 
 
 </body>
