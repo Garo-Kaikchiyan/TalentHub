@@ -19,10 +19,10 @@
 	<div class="headerx"></div>
 	<div class="header">
 		<div id="logo" class="header">
-			<a href="index.html"><img src="img/logo.png" /></a>
+			<a href="index"><img src="img/logo.png" /></a>
 		</div>
 		<div id="form2" class="header">
-			&nbsp; <br> <a href="myProfile.html">My Profile</a><br>
+			&nbsp; <br> <a href="changeProfile">My Profile</a><br>
 		</div>
 		<input type="submit" class="submit1" value="Logout" />
 		</div>

@@ -3,9 +3,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style>
-
-</style>
 <meta charset="UTF-8">
 <title>talentsHub</title>
 <link type="text/css" rel="stylesheet" href="css/buttons.css" />
@@ -25,7 +22,7 @@
 		</div>
 		<div id="form2" class="header">
 			<form action="myProfile.htm" method="get">
-			&nbsp; <br> <a href="myProfile.htm" class="btn btn-primary btn-xs">My profile</a><br>
+			&nbsp; <br> <a href="changeProfile" class="btn btn-primary btn-xs">My profile</a><br>
 			</form>
 		</div>
 		<form action="logout.htm" method="post">
@@ -44,7 +41,7 @@
 		</div>
 		<div class="button-container">
 			<form action="phpForum" method="get">
-				<button id="btn3" class="css_button"></button>
+				<button id="btn3" class="css_button"></button> 
 			</form>
 			<form action="jsForum" method="get">
 				<button id="btn4" class="css_button"></button>
