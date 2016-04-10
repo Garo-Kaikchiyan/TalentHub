@@ -59,7 +59,7 @@
 			<div class="post-main">
 				<div class="col30pc post-leftbar">
 					<div class="avatar">
-						<img src="http://flatter.cloudtub.com/img/avatar.png">
+						<img src="${question.owner.photo }">
 					</div>
 					<div>
 						<strong>Група:</strong>
@@ -79,7 +79,7 @@
 					</div>
 					<div>
 						<strong>Рождена дата:</strong>
-						<span>02.02.02</span>
+						<span>${question.owner.birth}</span>
 					</div>
 				</div>
 
@@ -102,7 +102,7 @@
 					<span>
 						<img src="http://forums.data.bg/public/style_images/Data.BG/user_off.png">
 					</span>
-					<span>${answers[loop.index-1].user_email }</span>
+					<span>${answers[loop.index-1].owner.firstName } ${answers[loop.index-1].owner.lastName }</span>
 				</div><div class="col70pc">
 					<span>Публикувано: ${answers[loop.index-1].date_created }</span>
 				</div>
@@ -112,7 +112,7 @@
 			<div class="post-main">
 				<div class="col30pc post-leftbar">
 					<div class="avatar">
-						<img src="http://flatter.cloudtub.com/img/avatar.png">
+						<img src="${answers[loop.index-1].owner.photo }">
 					</div>
 					<div>
 						<strong>Група:</strong>
@@ -143,7 +143,8 @@
 </div>
 			<!-- POST FOOTER -->
 			<div class="post-footer" style="width:77%; margin:auto">
-				<a href="#content">Rate +1</a>
+				<a href="#content">Rate +1</a> 
+				 <label style="float:right"> ${answers[loop.index-1].likes }</label>
 				<br><br>
 			</div>
 			</c:forEach>
