@@ -46,10 +46,13 @@
 			<!-- POST META -->
 			<div class="post-meta">
 				<div class="col30pc">
+				<form action="getProfile" method="post">
 					<span>
 						<img src="http://forums.data.bg/public/style_images/Data.BG/user_off.png">
 					</span>
-					<span>${question.user_name }</span>
+					 <input type="hidden" value="${question.owner.email}" name="user">
+					<input type="submit" value="${question.user_name }"/>
+					</form>
 				</div><div class="col70pc">
 					<span>Публикувано: ${question.date_created }</span>
 				</div>
@@ -99,12 +102,13 @@
 			<!-- POST META -->
 			<div class="post-meta">
 				<div class="col30pc">
+					
+					<form action="getProfile" method="post">
 					<span>
 						<img src="http://forums.data.bg/public/style_images/Data.BG/user_off.png">
 					</span>
-					<form action="getProfile" method="get">
-					 <c:set var="question" scope="request" value="${answers[loop.index-1].owner}" ></c:set>
-					<span onclick="form.submit();">${answers[loop.index-1].owner.firstName } ${answers[loop.index-1].owner.lastName }</span>
+					 <input type="hidden" value="${answers[loop.index-1].owner.email}" name="user">
+					<input type="submit" value="${answers[loop.index-1].owner.firstName } ${answers[loop.index-1].owner.lastName }"/>
 					</form>
 				</div><div class="col70pc">
 					<span>Публикувано: ${answers[loop.index-1].date_created }</span>

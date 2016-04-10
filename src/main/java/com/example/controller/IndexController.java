@@ -5,14 +5,12 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import model.dao.IUserDAO;
 import model.dao.IUserDAO.DataSource;
-import model.db.DBManager;
 import model.EmailResponse;
 import model.User;
 
@@ -123,10 +121,17 @@ public class IndexController {
 		}
 		IUserDAO.getDAO(DataSource.DB).updateUser(u);
 		req.getSession().setAttribute("loggedUser", u);
-		return "main";
-		
-		
+		return "main";	
 	}
+	@RequestMapping(value="/getProfile", method = RequestMethod.POST)
+	public String getProfile(HttpServletRequest req, Model model){
+		if(req.getSession().getAttribute("loggedUser") == null)
+			return "index";
+		User u = IUserDAO.getDAO(DataSource.DB).getUser(req.getParameter("user"));
+		model.addAttribute("user", u);
+		return "profile";
+	}
+	
 	private void setFieldValues(Model model, HttpServletRequest req) {
 		model.addAttribute("firstName", req.getParameter("firstName").toString());
 		model.addAttribute("lastName", req.getParameter("lastName").toString());

@@ -13,6 +13,14 @@ public class Group {
 		this.group_name = group_name;
 	}
 
+	public ArrayList<User> getMembers() {
+		return members;
+	}
+
+	public void setMembers(ArrayList<User> members) {
+		this.members = members;
+	}
+
 	public String getGroup_name() {
 		return group_name;
 	}
