@@ -19,13 +19,17 @@
 	<div class="headerx"></div>
 	<div class="header">
 		<div id="logo" class="header">
-			<a href="index"><img src="img/logo.png" /></a>
+			<a href="main.htm"><img src="img/logo.png" /></a>
 		</div>
 		<div id="form2" class="header">
-			&nbsp; <br> <a href="changeProfile">My Profile</a><br>
+		<form action="myProfile.htm" method="get">
+			&nbsp; <br> <a href="changeProfile" class="btn btn-primary btn-xs">My profile</a><br>
+		</form>
 		</div>
-		<input type="submit" class="submit1" value="Logout" />
-		</div>
+		<form action="logout.htm" method="post">
+		<a href="logout" class="submit1 btn btn-primary btn-xs">Logout</a>
+		</form>
+	</div>
 	<br><br><br><br><br><br>
 	<table class="table table-striped table-hover ">
   <thead>

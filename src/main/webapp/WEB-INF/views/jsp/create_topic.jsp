@@ -19,12 +19,15 @@
 			<a href="main.htm"><img src="img/logo.png" /></a>
 		</div>
 		<div id="form2" class="header">
-			<form action="myProfile.htm" method="get">
+		<form action="myProfile.htm" method="get">
 			&nbsp; <br> <a href="changeProfile" class="btn btn-primary btn-xs">My profile</a><br>
-			</form>
+		</form>
 		</div>
-		<input type="submit" class="submit1" value="Logout" />
+		<form action="logout.htm" method="post">
+		<a href="logout" class="submit1 btn btn-primary btn-xs">Logout</a>
+		</form>
 	</div>
+		
 <br><br><br><br><br><br><br>
 	<form class="form-horizontal" action="createQuestion"  method="post">
   <fieldset>
