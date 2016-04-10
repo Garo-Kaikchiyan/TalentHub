@@ -49,7 +49,7 @@
       <td>${questions[loop.index-1].date_created}</td>
       <td>
       	<form action="thread" method="get">
-      	<input type="hidden" value="${loop.index}" name="questionIndex">
+      	<input type="hidden" value="${loop.index-1}" name="questionIndex">
       	<input type="submit" value="view">
       	</form>
       </td>
