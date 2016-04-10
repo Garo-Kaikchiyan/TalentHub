@@ -105,7 +105,7 @@
 					<span>
 						<img src="http://forums.data.bg/public/style_images/Data.BG/user_off.png">
 					</span>
-					<span>${answers[loop.index].user_email }</span>
+					<span>${answers[loop.index-1].user_email }</span>
 				</div><div class="col70pc">
 					<span>Публикувано: ${answers[loop.index-1].date_created }</span>
 				</div>
