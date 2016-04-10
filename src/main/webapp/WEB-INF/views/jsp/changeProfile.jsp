@@ -39,13 +39,13 @@
 				name="github_account" /><br> <input
 				placeholder="Stackoverflow account" type="text" id="mailbox"
 				name="stackoverflow_account" /><br>
+				<input
+				placeholder="Photo URL" type="text" id="mailbox"
+				name="photo_url" /><br>
 				<input type="submit" value="Submit">
 			</form>
-			<p>Choose your profile picture</p>
-			<form action="forum.html">
-				<input type="file" name="pic" accept="image/*"> <input
-					type="submit">
-			</form>
+			<div id="form4" class="bodyx">
+			<img src="${loggedUser.photo}">
 		</div>
 	</div>
 </body>
