@@ -6841,6 +6841,10 @@ button.close {
 .btn-lg {
   padding: 16px 20px;
 }
+.btn-lg2 {
+  padding: 30px 400px;
+  margin: 15px auto;
+}
 .btn-sm {
   padding: 8px 12px;
 }

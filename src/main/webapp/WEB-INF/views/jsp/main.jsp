@@ -37,7 +37,7 @@
 			<form action="forum" method="get"><button id="btn5" class="css_button"></button></form>
 		</div>
 		<div class="button-container">
-			<button id="btn6" class="css_button"></button>
+			<form action="viewGroups" method="get"><button id="btn6" class="css_button"></button></form>
 		</div>
 		
 	</div>
