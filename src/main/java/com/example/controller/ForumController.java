@@ -34,13 +34,11 @@ public class ForumController {
 		if(allJavaQuestions.isEmpty())
 			try {
 				allJavaQuestions.addAll(IQuestionDAO.getDAO(DataSource.DB).getAllPosts("javaForum"));
-				System.out.println(allJavaQuestions.size());
 			} catch (SQLException e) {
 				System.out.println("Problem retrieving java forum questions");
 				e.printStackTrace();
 			}
 		model.addAttribute("endIndex", allJavaQuestions.size());
-		model.addAttribute("forumName", "Java Forum");
 		req.getSession().setAttribute("questions", allJavaQuestions);
 		req.getSession().setAttribute("forum", "javaForum");
 		return "forum";
@@ -56,7 +54,6 @@ public class ForumController {
 				e.printStackTrace();
 			}
 		model.addAttribute("endIndex", allJSQuestions.size());
-		model.addAttribute("forumName", "JavaScript Forum");
 		req.getSession().setAttribute("questions", allJSQuestions);
 		req.getSession().setAttribute("forum", "jsForum");
 		return "forum";
@@ -72,7 +69,6 @@ public class ForumController {
 				e.printStackTrace();
 			}
 		model.addAttribute("endIndex", allAndroidQuestions.size());
-		model.addAttribute("forumName", "Android Forum");
 		req.getSession().setAttribute("questions", allAndroidQuestions);
 		req.getSession().setAttribute("forum", "androidForum");
 		return "forum";
@@ -89,7 +85,6 @@ public class ForumController {
 				e.printStackTrace();
 			}
 		model.addAttribute("endIndex", allPhpQuestions.size());
-		model.addAttribute("forumName", "PHP Forum");
 		req.getSession().setAttribute("questions", allPhpQuestions);
 		req.getSession().setAttribute("forum", "phpForum");
 		return "forum";
@@ -116,15 +111,19 @@ public class ForumController {
 		switch(req.getSession().getAttribute("forum").toString()){
 		case "javaForum":
 			q = allJavaQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
+			mod.addAttribute("forumName", "Java Forum");
 			break;
 		case "androidForum":
 			q = allAndroidQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
+			mod.addAttribute("forumName", "Android Forum");
 			break;
 		case "phpForum":
 			q = allPhpQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
+			mod.addAttribute("forumName", "PHP Forum");
 			break;
 		case "jsForum":
 			q = allJSQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
+			mod.addAttribute("forumName", "JavaScript Forum");
 			break;
 		}
 		if(q.getAnswers().isEmpty()){
@@ -135,6 +134,7 @@ public class ForumController {
 				e.printStackTrace();
 			}
 		}
+
 		mod.addAttribute("answers", q.getAnswers());
 		mod.addAttribute("question", q);
 		return "forum_look";

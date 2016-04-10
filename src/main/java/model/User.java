@@ -3,7 +3,7 @@ package model;
 import java.sql.Date;
 
 public class User {
-	private String firstName, lastName, email, password, gender;
+	private String firstName, lastName, email, password, gender, photo;
 	private Date birth;
 	
 	public User(String firstName, String lastName, String email, String password, String gender, Date birth) {
@@ -14,6 +14,10 @@ public class User {
 		this.password = password;
 		this.gender = gender;
 		this.birth = birth;
+		if(gender.equals("male"))
+			photo = "https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-512.png";
+		else
+			photo = "http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46b1c0c44b.png";
 	}
 	
 	public String getFirstName() {
@@ -62,6 +66,14 @@ public class User {
 	
 	public void setBirth(Date birth) {
 		this.birth = birth;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 	
 	

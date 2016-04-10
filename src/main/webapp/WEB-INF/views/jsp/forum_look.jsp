@@ -23,7 +23,7 @@
 	<div class="headerx"></div>
 	<div class="header">
 		<div id="logo" class="header">
-			<a href="main.htm"><img src="img/logo.png" /></a>
+			<a href="index"><img src="img/logo.png" /></a>
 		</div>
 		<div id="form2" class="header">
 		<form action="myProfile.htm" method="get">
@@ -37,7 +37,7 @@
 	
 	<br><br><br>
 	<div id="content">
-		<h1>Форум</h1>
+		<h1 align="center"><b> <c:out value="${forumName}"/></b></h1>
 		<!-- POST HEADER -->
 		<div class="post-header">
 			<h3>${question.question_title}</h3>

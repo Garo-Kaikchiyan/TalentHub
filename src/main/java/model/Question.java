@@ -11,6 +11,7 @@ public class Question {
 	private String question_text;
 	private Date date_created;
 	private ArrayList<Answer> answers;
+	private User owner;
 	
 	public Question(String question_title, String user_email, String question_text, String firstName, String lastName) {
 		super();
@@ -72,6 +73,14 @@ public class Question {
 
 	public void addAnswer(Answer a){
 		answers.add(a);
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 	
 }

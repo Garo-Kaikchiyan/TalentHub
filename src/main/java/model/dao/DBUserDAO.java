@@ -29,7 +29,7 @@ class DBUserDAO implements IUserDAO {
 	@Override
 	public boolean addUser(User newUser) {
 		boolean success = true;
-		String query = "INSERT INTO talenthub.users (user_email, user_password, first_name, last_name, gender, birth_date) VALUES (?, SHA1(?), ?, ?, ?, ?);";
+		String query = "INSERT INTO talenthub.users (user_email, user_password, first_name, last_name, gender, birth_date, user_photo) VALUES (?, SHA1(?), ?, ?, ?, ?, ?);";
 		try(PreparedStatement st = manager.getConnection().prepareStatement(query);) {
 			st.setString(1, newUser.getEmail());
 			st.setString(2, newUser.getPassword());
@@ -37,6 +37,7 @@ class DBUserDAO implements IUserDAO {
 			st.setString(4, newUser.getLastName());
 			st.setString(5, newUser.getGender());
 			st.setDate(6, newUser.getBirth());
+			st.setString(7, newUser.getPhoto());
 			st.execute();
 			} catch (SQLException e) {
 			success = false;
@@ -46,7 +47,7 @@ class DBUserDAO implements IUserDAO {
 
 	@Override
 	public List<User> getAllUsers() throws SQLException{
-		String query = "SELECT first_name, last_name, email, SHA1(password), gender, birth_date FROM users;";
+		String query = "SELECT first_name, last_name, email, SHA1(password), gender, birth_date, user_photo FROM users;";
 		List<User> users = new ArrayList<>();
 		Statement st = manager.getConnection().createStatement();
 		ResultSet result = st.executeQuery(query);
@@ -62,7 +63,7 @@ class DBUserDAO implements IUserDAO {
 					          result.getString(4),
 					          result.getString(5),
 					          result.getDate(6));
-			System.out.println("user added");
+			u.setPhoto(result.getString(7));
 			users.add(u);
 		}
 		st.close();
@@ -72,14 +73,15 @@ class DBUserDAO implements IUserDAO {
 
 	@Override
 	public boolean updateUser(User loggedUser) {
-		String query = "UPDATE USERS SET user_password = SHA1(?), first_name = ?, last_name = ?, gender = ?, birth_date = ? WHERE user_email = ?;";
+		String query = "UPDATE USERS SET user_password = SHA1(?), first_name = ?, last_name = ?, gender = ?, birth_date = ?, user_photo = ? WHERE user_email = ?;";
 		try(PreparedStatement st = manager.getConnection().prepareStatement(query);) {
 			st.setString(1, loggedUser.getPassword());
 			st.setString(2, loggedUser.getFirstName());
 			st.setString(3, loggedUser.getLastName());
 			st.setString(4, loggedUser.getGender());
 			st.setDate(5, loggedUser.getBirth());
-			st.setString(6, loggedUser.getEmail());
+			st.setString(6, loggedUser.getPhoto());
+			st.setString(7, loggedUser.getEmail());
 			st.execute();
 			return true;
 			} catch (SQLException e) {
@@ -147,6 +149,31 @@ class DBUserDAO implements IUserDAO {
 			} catch (SQLException e) {
 				System.out.println("failed update");
 				return false;
+		}
+	}
+
+	@Override
+	public User getUser(String email) {
+		String query = "SELECT first_name, last_name, email, SHA1(password), gender, birth_date, user_photo FROM users WHERE email = " + email + ";";
+		Statement st;
+		try {
+			st = manager.getConnection().createStatement();
+			ResultSet result = st.executeQuery(query);
+			while(result.next()){
+				System.out.println("row taken");
+				User u = new User(result.getString(1),
+								  result.getString(2),
+						          result.getString(3),
+						          result.getString(4),
+						          result.getString(5),
+						          result.getDate(6));
+				u.setPhoto(result.getString(7));
+				return u;
+			}
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 

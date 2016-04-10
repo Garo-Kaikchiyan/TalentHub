@@ -10,6 +10,7 @@ public class Answer {
 	private String text;
 	private Date date_created;
 	private int likes;
+	private User owner;
 	
 	
 	
@@ -18,6 +19,7 @@ public class Answer {
 		this.question_title = question_title;
 		this.user_email = user_email;
 		this.text = text;
+		likes = 0;
 	}
 	public String getQuestion_title() {
 		return question_title;
@@ -54,6 +56,12 @@ public class Answer {
 	}
 	public void setAnswer_id(int answer_id) {
 		this.answer_id = answer_id;
+	}
+	public User getOwner() {
+		return owner;
+	}
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 	
 }

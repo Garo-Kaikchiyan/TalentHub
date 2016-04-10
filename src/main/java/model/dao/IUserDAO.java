@@ -24,7 +24,7 @@ public interface IUserDAO {
 			throw new IllegalArgumentException();
 		}
 	}
-
+	User getUser(String email);
 	boolean updateUser(User loggedUser);
 	boolean changeUserPass(String email, String pass);
 	User validateUser(String email, String pass);
