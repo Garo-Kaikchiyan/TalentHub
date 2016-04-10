@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import model.Question;
 import model.Answer;
 import model.User;
+import model.dao.IQuestionDAO.DataSource;
 
 public interface IAnswerDAO {
 	enum DataSource {
@@ -16,8 +17,8 @@ public interface IAnswerDAO {
 	ArrayList<Answer> getAllPosts(User newUser) throws SQLException;
 	public void vote(Answer answer,User newUser,boolean vote) throws SQLException;
 	
-	static IAnswerDAO getDAO(DataSource ds) {
-		switch (ds) {
+	static IAnswerDAO getDAO(DataSource db) {
+		switch (db) {
 		case DB:
 			return DBAnswerDAO.getInstance();
 		default:

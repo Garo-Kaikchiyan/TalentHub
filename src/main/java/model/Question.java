@@ -1,20 +1,24 @@
 package model;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Question {
 	private String question_title;
 	private String user_email;
 	private String user_name;
-	private String user_family;
 	private String question_text;
 	private Date date_created;
+	private ArrayList<Answer> answers;
 	
-	public Question(String question_title, String user_email, String question_text) {
+	public Question(String question_title, String user_email, String question_text, String firstName, String lastName) {
 		super();
 		this.question_title = question_title;
 		this.user_email = user_email;
 		this.question_text = question_text;
+		user_name = firstName + " " + lastName;
+		date_created = Date.valueOf(LocalDate.now());
 	}
 
 	public Date getDate_created() {
@@ -57,13 +61,13 @@ public class Question {
 		this.user_name = user_name;
 	}
 
-	public String getUser_family() {
-		return user_family;
+	public ArrayList<Answer> getAnswers() {
+		return answers;
 	}
 
-	public void setUser_family(String user_family) {
-		this.user_family = user_family;
+	public void setAnswers(ArrayList<Answer> answers) {
+		this.answers = answers;
 	}
-	
+
 	
 }

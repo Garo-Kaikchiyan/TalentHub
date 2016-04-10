@@ -12,7 +12,7 @@ public interface IQuestionDAO {
 		DB, JSON, XML, CSV, PLC
 	}
 	
-	boolean addQuestion(User newUser,Question question);
+	boolean addQuestion(User newUser,Question question, String forumGroup);
 	ArrayList<Question> getAllPosts(User newUser) throws SQLException;
 	ArrayList<Question> getAllPosts(String forum_group) throws SQLException;
 	static IQuestionDAO getDAO(DataSource ds) {

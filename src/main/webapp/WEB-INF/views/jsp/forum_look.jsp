@@ -1,13 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
 <style>
 
 </style>
 <meta charset="UTF-8">
-<title>talentsHub</title><link type="text/css" rel="stylesheet" href="../css/style.css" />
+<title>talentsHub</title><link type="text/css" rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/style1.css">
 <link rel="stylesheet" href="css/post.css">
@@ -40,7 +42,7 @@
 		<h1>Форум</h1>
 		<!-- POST HEADER -->
 		<div class="post-header">
-			<h3>Заглавие</h3>
+			<h3>${question.question_title}</h3>
 		</div>
 		<div class="post">
 			<!-- POST META -->
@@ -49,9 +51,9 @@
 					<span>
 						<img src="http://forums.data.bg/public/style_images/Data.BG/user_off.png">
 					</span>
-					<span>username</span>
+					<span>${question.user_name }</span>
 				</div><div class="col70pc">
-					<span>Публикувано: 20.12.2015 - 16:00</span>
+					<span>Публикувано: ${question.date_created }</span>
 				</div>
 			</div>
 
@@ -84,22 +86,7 @@
 				</div>
 
 				<div class="col70pc post-content">
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					</p>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					</p>
+					${question.question_text }
 				</div>
 			</div>
 </div>

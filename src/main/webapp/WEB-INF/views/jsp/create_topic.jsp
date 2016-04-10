@@ -26,7 +26,7 @@
 		<input type="submit" class="submit1" value="Logout" />
 	</div>
 <br><br><br><br><br><br><br>
-	<form class="form-horizontal" action="createTopic"  method="post">
+	<form class="form-horizontal" action="createQuestion"  method="post">
   <fieldset>
     <legend>Post new thread</legend>
     <div class="form-group">

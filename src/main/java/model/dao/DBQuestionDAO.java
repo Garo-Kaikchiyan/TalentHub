@@ -25,14 +25,16 @@ public class DBQuestionDAO implements IQuestionDAO {
 	}
 
 	@Override
-	public boolean addQuestion(User newUser, Question question) {
+	public boolean addQuestion(User newUser, Question question, String forumGroup) {
 		boolean success = true;
-		String query = "INSERT INTO talenthub.Questions (question_title,user_email,question_text,date_created) VALUES (?,?,?,NOW());";
+		String query = "INSERT INTO talenthub.Questions (question_title, user_email, question_text, date_created, forum_group) VALUES (?,?,?,NOW(), ?);";
 		try (PreparedStatement st = manager.getConnection().prepareStatement(query)) {
 			st.setString(1, question.getQuestion_title());
 			st.setString(2, newUser.getEmail());
 			st.setString(3, question.getQuestion_text());
+			st.setString(5, forumGroup);
 			st.execute();
+			System.out.println("Question added");
 		} catch (SQLException e) {
 			success = false;
 		}
@@ -48,7 +50,7 @@ public class DBQuestionDAO implements IQuestionDAO {
 		st.setString(1, newUser.getEmail());
 		ResultSet rs = st.executeQuery();
 		while (rs.next()) {
-			Question q = new Question(rs.getString(1), newUser.getEmail(), rs.getString(2));
+			Question q = new Question(rs.getString(1), newUser.getEmail(), rs.getString(2), newUser.getFirstName(), newUser.getLastName());
 			q.setDate_created(rs.getDate(3));
 			questionsFromUser.add(q);
 		}
@@ -59,15 +61,14 @@ public class DBQuestionDAO implements IQuestionDAO {
 	@Override
 	public ArrayList<Question> getAllPosts(String forum_group) throws SQLException {
 		ArrayList<Question> questionsFromGroup=new ArrayList<>();
-		String query= "SELECT q.question_title,q.user_email,u.first_name,u.last_name,q.question_text,q.date_created FROM talenthub.Questions q, talenhub.Users u WHERE q.user_email=u.user_email AND q.forum_group=?;";
+		String query= "SELECT q.question_title,q.user_email,u.first_name,u.last_name,q.question_text,q.date_created FROM talenthub.Questions q, talenthub.Users u WHERE q.user_email=u.user_email AND q.forum_group=?;";
 		PreparedStatement st=manager.getConnection().prepareStatement(query);
 		st.setString(1, forum_group);
 		ResultSet rs=st.executeQuery();
 		while(rs.next()){
-			Question q=new Question(rs.getString(1),rs.getString(2),rs.getString(5));
-			q.setUser_name(rs.getString(3));
-			q.setUser_family(rs.getString(4));
+			Question q=new Question(rs.getString(1),rs.getString(2),rs.getString(5),rs.getString(3), rs.getString(4));
 			q.setDate_created(rs.getDate(6));
+			questionsFromGroup.add(q);
 		}
 		st.close();
 		return questionsFromGroup;

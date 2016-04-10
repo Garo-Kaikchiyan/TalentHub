@@ -17,7 +17,7 @@
     box-shadow: inset 1px 1px 0px 0px #BEE2F9;
     cursor: pointer;
     color: #FFFFFF;
-    display: inline-block;
+    display: inline;
     background: -webkit-linear-gradient(90deg, #468ccf 5%, #63b8ee 100%);
     background: -moz-linear-gradient(90deg, #468ccf 5%, #63b8ee 100%);
     background: -ms-linear-gradient(90deg, #468ccf 5%, #63b8ee 100%);
@@ -83,7 +83,7 @@
 }
 
 .button-container {
-	width: 400px;
+	width: 600px;
     margin: 50px auto;
 }
 .button-container2 {
