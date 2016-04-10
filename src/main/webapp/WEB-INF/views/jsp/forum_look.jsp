@@ -102,7 +102,10 @@
 					<span>
 						<img src="http://forums.data.bg/public/style_images/Data.BG/user_off.png">
 					</span>
-					<span>${answers[loop.index-1].owner.firstName } ${answers[loop.index-1].owner.lastName }</span>
+					<form action="getProfile" method="get">
+					 <c:set var="question" scope="request" value="${answers[loop.index-1].owner}" ></c:set>
+					<span onclick="form.submit();">${answers[loop.index-1].owner.firstName } ${answers[loop.index-1].owner.lastName }</span>
+					</form>
 				</div><div class="col70pc">
 					<span>Публикувано: ${answers[loop.index-1].date_created }</span>
 				</div>

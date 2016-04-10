@@ -117,6 +117,10 @@ public class IndexController {
 			String stackoverflowAccount = req.getParameter("stackoverflow_account");
 			u.setStackOverflowAccount(stackoverflowAccount);
 		} */
+		if(req.getParameter("photo_url") != null) {
+			String photo = req.getParameter("photo_url");
+			u.setPhoto(photo);
+		}
 		IUserDAO.getDAO(DataSource.DB).updateUser(u);
 		req.getSession().setAttribute("loggedUser", u);
 		return "main";

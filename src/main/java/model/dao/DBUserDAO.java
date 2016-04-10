@@ -82,7 +82,7 @@ class DBUserDAO implements IUserDAO {
 			st.setDate(5, loggedUser.getBirth());
 			st.setString(6, loggedUser.getPhoto());
 			st.setString(7, loggedUser.getEmail());
-			st.execute();
+			st.executeUpdate();
 			return true;
 			} catch (SQLException e) {
 				System.out.println("failed update");

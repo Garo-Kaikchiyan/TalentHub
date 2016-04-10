@@ -44,7 +44,7 @@ public class DBAnswerDAO implements IAnswerDAO {
 	@Override
 	public ArrayList<Answer> getAllAnswers(Question question) throws SQLException {
 		ArrayList<Answer> answersForQuestion = new ArrayList<>();
-		String query = "SELECT a.answer_id,a.user_email,a.answer_text,a.date_created, u.first_name, u.last_name,u.birth_date,u.gender,u.picture,u.php_answers,u.js_answers,u.android_answers,u.ee_answers FROM talenthub.Answers a, talenthub.Users u WHERE question_title=? AND u.user_email=a.user_email;";
+		String query = "SELECT a.answer_id,a.user_email,a.answer_text,a.date_created, u.first_name, u.last_name,u.birth_date,u.gender,u.user_photo,u.php_answers,u.js_answers,u.android_answers,u.ee_answers FROM talenthub.Answers a, talenthub.Users u WHERE question_title=? AND u.user_email=a.user_email;";
 		PreparedStatement st = manager.getConnection().prepareStatement(query);
 		st.setString(1, question.getQuestion_title());
 		ResultSet rs = st.executeQuery();
@@ -52,17 +52,14 @@ public class DBAnswerDAO implements IAnswerDAO {
 			Answer a = new Answer(question.getQuestion_title(), rs.getString(2), rs.getString(3));
 			a.setDate_created(rs.getDate(4));
 			// a.setLikes(rs.getInt(5));
+			User u = new User(rs.getString(5), rs.getString(6), rs.getString(2), "", rs.getString(8), rs.getDate(7));
 			a.setAnswer_id(rs.getInt(1));
-			a.getOwner().setEmail(rs.getString(2));
-			a.getOwner().setFirstName(rs.getString(5));
-			a.getOwner().setLastName(rs.getString(6));
-			a.getOwner().setBirth(rs.getDate(7));
-			a.getOwner().setPhoto(rs.getString(8));
-			a.getOwner().setGender(rs.getString(9));
-			a.getOwner().setPhpAnswers(rs.getInt(10));
-			a.getOwner().setJsAnswers(rs.getInt(11));
-			a.getOwner().setAndroidAnswers(rs.getInt(12));
-			a.getOwner().setEeAnswers(rs.getInt(13));
+			u.setPhoto(rs.getString(9));
+			u.setPhpAnswers(rs.getInt(10));
+			u.setJsAnswers(rs.getInt(11));
+			u.setAndroidAnswers(rs.getInt(12));
+			u.setEeAnswers(rs.getInt(13));
+			a.setOwner(u);
 			answersForQuestion.add(a);
 		}
 		st.close();

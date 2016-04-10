@@ -33,7 +33,7 @@ public class ForumController {
 	public String goToJavaForums(HttpServletRequest req, Model model) {
 		if(allJavaQuestions.isEmpty())
 			try {
-				allJavaQuestions.addAll(IQuestionDAO.getDAO(DataSource.DB).getAllPosts("javaForum"));
+				allJavaQuestions.addAll(IQuestionDAO.getDAO(DataSource.DB).getAllQuestions("javaForum"));
 			} catch (SQLException e) {
 				System.out.println("Problem retrieving java forum questions");
 				e.printStackTrace();
@@ -48,7 +48,7 @@ public class ForumController {
 	public String goToJSForums(HttpServletRequest req, Model model) {
 		if(allJSQuestions.isEmpty())
 			try {
-				allJSQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllPosts("jsForum");
+				allJSQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllQuestions("jsForum");
 			} catch (SQLException e) {
 				System.out.println("Problem retrieving js forum questions");
 				e.printStackTrace();
@@ -63,7 +63,7 @@ public class ForumController {
 	public String goToAndroidForums(HttpServletRequest req, Model model) {
 		if(allAndroidQuestions.isEmpty())
 			try {
-				allAndroidQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllPosts("androidForum");
+				allAndroidQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllQuestions("androidForum");
 			} catch (SQLException e) {
 				System.out.println("Problem retrieving android forum questions");
 				e.printStackTrace();
@@ -79,7 +79,7 @@ public class ForumController {
 
 		if(allPhpQuestions.isEmpty())
 			try {
-				allPhpQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllPosts("phpForum");
+				allPhpQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllQuestions("phpForum");
 			} catch (SQLException e) {
 				System.out.println("Problem retrieving php forum questions");
 				e.printStackTrace();
