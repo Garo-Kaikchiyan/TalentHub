@@ -65,14 +65,17 @@
 		clear: both;
 	}
 
+	
 	.avatar {
-		width: 100%;
+		width: auto;
 		border-bottom: none;
+		height: auto;
 	}
-
 	.avatar img {
-		max-width: 100%;
-		width: 100%;
+		width: auto;
+		height: auto;
+		max-height: 200px;
+		max-width:300px;
 	}
 
 	.post-footer {
