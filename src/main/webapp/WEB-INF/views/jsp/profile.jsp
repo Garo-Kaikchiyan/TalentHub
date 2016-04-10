@@ -1,0 +1,64 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta charset="UTF-8">
+<title>talentsHub</title>
+<link type="text/css" rel="stylesheet" href="css/style.css" />
+<link href="https://fontastic.s3.amazonaws.com/koZpYWicqpccnhbmDcBiTG/icons.css" rel="stylesheet">
+ <link rel="stylesheet" href="css/normalize.css"> 
+  <link rel="stylesheet" href="css/style1.css"> 
+</head>
+<body><div class="headerx">
+</div>
+<div class="header">
+	<div id="logo" class="header"><a href="index.html"><img src="../images/logo.png"/></a> </div>
+		<div id="form2" class="header">  &nbsp; <br>
+		<a href="myProfile.html">My Profile</a><br>
+		</div>
+		<input type="submit" class="submit1" value="logout"/>
+		</div>
+<section class="card">
+  <figure class="panel meta">
+    <picture>
+      <img class="avatar" src="../images/profile_pic.jpg" width="128" height="128"/>
+      <img class="company-logo" src="../images/star_icon.png" alt="BigglesCodes" width="40" height="40"/>
+    </picture>
+    <figcaption>
+
+      <h1 class="name">Zhivko Stanishev</h1>
+      <h3 class="title">IT Talent</h3>
+    </figcaption>
+  </figure>
+  
+  <div class="panel info">
+    <dl class="skillz">
+      <dt>Java/EE</dt>
+      <dd>0</dd>
+      <dt>Java/Android</dt>
+      <dd>0</dd>
+      <dt>Javascript</dt>
+      <dd>0</dd>
+      <dt>PHP</dt>
+      <dd>0</dd>
+    </dl>
+    
+    <ul class="social">
+      <li><a class="icon-social-twitter" href="https://twitter.com/bigglesrocks">Twitter</a></li>
+      <li><a class="icon-social-github" href="https://github.com/jlegosama">Github</a></li>
+      <li><a class="icon-social-stack-overflow" href="http://stackoverflow.com/users/664904/jlego">StackOverflow</a></li>
+      <li><a class="icon-social-dribbble" href="https://dribbble.com/biggles">Dribbble</a></li>
+      <li><a class="icon-social-medium" href="#">Medium</a></li>
+    </ul>
+    
+  </div>
+  </div>
+</section>
+     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> 
+
+        <script src="js/index.js"></script>
+		
+
+</body>
+</html>
