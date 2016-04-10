@@ -31,7 +31,7 @@
 	</div>
 	<div class="bodyx">
 	
-		<div class="button-container">
+		<div class="button-container" style="margin:auto">
 			<form action="javaForum" method="get">
 				<button id="btn1" class="css_button"></button>
 			</form>

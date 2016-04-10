@@ -84,8 +84,12 @@
 
 .button-container {
 	width: 600px;
-    margin: 50px auto;
+    margin: 15px auto;
 }
+.button-container form { 
+	display:inline-block; 
+}
+
 .button-container2 {
 	width: auto;
     margin: 200px auto;

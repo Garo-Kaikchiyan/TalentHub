@@ -18,9 +18,6 @@
 <link
 	href="https://fontastic.s3.amazonaws.com/koZpYWicqpccnhbmDcBiTG/icons.css"
 	rel="stylesheet">
-<link rel="stylesheet" href="css/normalize.css">
-<link rel="stylesheet" href="css/style1.css">
-<link type="text/css" rel="stylesheet" href="css/bootstrap.css" />
 </head>
 <body>
 	<div class="headerx"></div>
@@ -98,7 +95,7 @@
 		</div>
 		<c:forEach begin="1" end="${fn:length(answers)}" varStatus="loop">
 		
-		<div class="post">
+		<div class="post" style="width:77%; margin:auto">
 			<!-- POST META -->
 			<div class="post-meta">
 				<div class="col30pc">
@@ -145,8 +142,9 @@
 			</div>
 </div>
 			<!-- POST FOOTER -->
-			<div class="post-footer">
-				<a href="#content">Kym nachaloto</a>
+			<div class="post-footer" style="width:77%; margin:auto">
+				<a href="#content">Rate +1</a>
+				<br><br>
 			</div>
 			</c:forEach>
 			
@@ -160,5 +158,6 @@
         <button type="submit" class="btn btn-primary" style="float:left">Post reply</button>
         <c:set var="question" scope="session" value="${question}" ></c:set>
 		</form>
+		<br>
 </body>
 </html>
