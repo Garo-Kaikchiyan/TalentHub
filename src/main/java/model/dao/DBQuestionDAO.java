@@ -32,10 +32,11 @@ public class DBQuestionDAO implements IQuestionDAO {
 			st.setString(1, question.getQuestion_title());
 			st.setString(2, newUser.getEmail());
 			st.setString(3, question.getQuestion_text());
-			st.setString(5, forumGroup);
+			st.setString(4, forumGroup);
 			st.execute();
 			System.out.println("Question added");
 		} catch (SQLException e) {
+			e.printStackTrace();
 			success = false;
 		}
 		return success;

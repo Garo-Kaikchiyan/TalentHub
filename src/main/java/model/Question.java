@@ -19,6 +19,7 @@ public class Question {
 		this.question_text = question_text;
 		user_name = firstName + " " + lastName;
 		date_created = Date.valueOf(LocalDate.now());
+		answers = new ArrayList<>();
 	}
 
 	public Date getDate_created() {

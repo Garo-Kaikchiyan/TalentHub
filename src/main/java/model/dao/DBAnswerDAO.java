@@ -34,6 +34,7 @@ public class DBAnswerDAO	implements IAnswerDAO {
 			st.setString(3,answer.getText());
 			st.execute();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			success=false;
 		}
 		
@@ -43,14 +44,14 @@ public class DBAnswerDAO	implements IAnswerDAO {
 	@Override
 	public ArrayList<Answer> getAllAnswers(Question question) throws SQLException {
 		ArrayList<Answer> answersForQuestion = new ArrayList<>();
-		String query="SELECT answer_id,user_email,answer_text,date_created,likes FROM talenthub.Answers WHERE question_title=?";
+		String query="SELECT answer_id,user_email,answer_text,date_created, votes FROM talenthub.Answers WHERE question_title=?";
 		PreparedStatement st=manager.getConnection().prepareStatement(query);
 		st.setString(1, question.getQuestion_title());
 		ResultSet rs=st.executeQuery();
 		while(rs.next()){
 			Answer a=new Answer(question.getQuestion_title(),rs.getString(2),rs.getString(3));
 			a.setDate_created(rs.getDate(4));
-			a.setLikes(rs.getInt(5));
+			//a.setLikes(rs.getInt(5));
 			a.setAnswer_id(rs.getInt(1));
 			answersForQuestion.add(a);
 		}

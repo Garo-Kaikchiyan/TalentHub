@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import model.Answer;
 import model.Question;
@@ -96,7 +97,7 @@ public class ForumController {
 		String forum = req.getSession().getAttribute("forum").toString();
 		IQuestionDAO.getDAO(DataSource.DB).addQuestion(u, q, forum);
 		addQuestionToList(forum, q);
-		return forum;
+		return "redirect:/" + forum;
 	}
 	
 	@RequestMapping(value="/thread", method = RequestMethod.GET)
@@ -116,7 +117,6 @@ public class ForumController {
 			q = allJSQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
 			break;
 		}
-		req.getSession().setAttribute("questionIndex", Integer.parseInt(req.getParameter("questionIndex")));
 		if(q.getAnswers().isEmpty()){
 			try {
 				q.setAnswers(IAnswerDAO.getDAO(model.dao.IAnswerDAO.DataSource.DB).getAllAnswers(q));
@@ -136,13 +136,13 @@ public class ForumController {
 	}
 	
 	@RequestMapping(value="/addAnswer", method = RequestMethod.POST)
-	public String addAnswer(HttpServletRequest req){
+	public String addAnswer(HttpServletRequest req, Model mod){
 		User u = (User) req.getSession().getAttribute("loggedUser");
-		Question q = (Question) req.getAttribute("question");
+		Question q = (Question) req.getSession().getAttribute("question");
 		Answer a = new Answer(q.getQuestion_title(), u.getEmail(), req.getParameter("text"));
 		IAnswerDAO.getDAO(model.dao.IAnswerDAO.DataSource.DB).addAnswer(a, q, u);
 		q.addAnswer(a);
-		return ;
+		return "redirect:/" + req.getSession().getAttribute("forum").toString();
 	}
 	
 	private void addQuestionToList(String type, Question q){

@@ -41,12 +41,12 @@
     </tr>
   </thead>
   <tbody>
-  <c:forEach begin="${startIndex}" end="${endIndex}" varStatus="loop">
+  <c:forEach begin="${startIndex + 1}" end="${endIndex}" varStatus="loop">
    <tr>
       <td>${loop.index}</td>
-      <td>${questions[loop.index].question_title }</td>
-      <td>${questions[loop.index].user_name }</td>
-      <td>${questions[loop.index].date_created}</td>
+      <td>${questions[loop.index-1].question_title }</td>
+      <td>${questions[loop.index-1].user_name }</td>
+      <td>${questions[loop.index-1].date_created}</td>
       <td>
       	<form action="thread" method="get">
       	<input type="hidden" value="${loop.index}" name="questionIndex">
