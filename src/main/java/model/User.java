@@ -5,7 +5,8 @@ import java.sql.Date;
 public class User {
 	private String firstName, lastName, email, password, gender, photo;
 	private Date birth;
-	
+	private int phpAnswers,jsAnswers,androidAnswers,eeAnswers;
+	private int allForumEntrys;
 	public User(String firstName, String lastName, String email, String password, String gender, Date birth) {
 		super();
 		this.firstName = firstName;
@@ -74,6 +75,46 @@ public class User {
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+
+	public int getPhpAnswers() {
+		return phpAnswers;
+	}
+
+	public void setPhpAnswers(int phpAnswers) {
+		this.phpAnswers = phpAnswers;
+	}
+
+	public int getJsAnswers() {
+		return jsAnswers;
+	}
+
+	public void setJsAnswers(int jsAnswers) {
+		this.jsAnswers = jsAnswers;
+	}
+
+	public int getAndroidAnswers() {
+		return androidAnswers;
+	}
+
+	public void setAndroidAnswers(int androidAnswers) {
+		this.androidAnswers = androidAnswers;
+	}
+
+	public int getEeAnswers() {
+		return eeAnswers;
+	}
+
+	public void setEeAnswers(int eeAnswers) {
+		this.eeAnswers = eeAnswers;
+	}
+
+	public int getAllForumEntrys() {
+		return allForumEntrys;
+	}
+
+	public void setAllForumEntrys(int allForumEntrys) {
+		this.allForumEntrys = allForumEntrys;
 	}
 	
 	

@@ -13,8 +13,8 @@ public interface IQuestionDAO {
 	}
 	
 	boolean addQuestion(User newUser,Question question, String forumGroup);
-	ArrayList<Question> getAllPosts(User newUser) throws SQLException;
-	ArrayList<Question> getAllPosts(String forum_group) throws SQLException;
+	ArrayList<Question> getAllQuestions(User newUser) throws SQLException;
+	ArrayList<Question> getAllQuestions(String forum_group) throws SQLException;
 	static IQuestionDAO getDAO(DataSource ds) {
 		switch (ds) {
 		case DB:

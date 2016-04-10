@@ -176,5 +176,16 @@ class DBUserDAO implements IUserDAO {
 			return null;
 		}
 	}
-
+	public int calculateAllPosts(User newUser) throws SQLException{
+		String query="SELECT question_title FROM talenthub.Questions q WHERE q.user_email=?";
+		PreparedStatement st=manager.getConnection().prepareStatement(query);
+		st.setString(1, newUser.getEmail());
+		ResultSet rs=st.executeQuery();
+		int allForumEntrys=0;
+		while(rs.next()){
+			allForumEntrys++;
+		}
+		newUser.setAllForumEntrys(allForumEntrys);
+		return allForumEntrys;
+	}
 }
