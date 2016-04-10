@@ -69,5 +69,8 @@ public class Question {
 		this.answers = answers;
 	}
 
+	public void addAnswer(Answer a){
+		answers.add(a);
+	}
 	
 }

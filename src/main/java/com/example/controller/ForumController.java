@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import model.Answer;
 import model.Question;
 import model.User;
 import model.dao.IAnswerDAO;
@@ -115,7 +116,8 @@ public class ForumController {
 			q = allJSQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
 			break;
 		}
-		if(q.getAnswers() == null){
+		req.getSession().setAttribute("questionIndex", Integer.parseInt(req.getParameter("questionIndex")));
+		if(q.getAnswers().isEmpty()){
 			try {
 				q.setAnswers(IAnswerDAO.getDAO(model.dao.IAnswerDAO.DataSource.DB).getAllAnswers(q));
 			} catch (SQLException e) {
@@ -131,6 +133,16 @@ public class ForumController {
 	@RequestMapping(value="/createTopic", method = RequestMethod.GET) 
 	public String createTopic(Model model) {
 		return "create_topic";
+	}
+	
+	@RequestMapping(value="/addAnswer", method = RequestMethod.POST)
+	public String addAnswer(HttpServletRequest req){
+		User u = (User) req.getSession().getAttribute("loggedUser");
+		Question q = (Question) req.getAttribute("question");
+		Answer a = new Answer(q.getQuestion_title(), u.getEmail(), req.getParameter("text"));
+		IAnswerDAO.getDAO(model.dao.IAnswerDAO.DataSource.DB).addAnswer(a, q, u);
+		q.addAnswer(a);
+		return ;
 	}
 	
 	private void addQuestionToList(String type, Question q){
