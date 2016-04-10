@@ -18,7 +18,7 @@
 	<div class="headerx"></div>
 	<div class="header">
 		<div id="logo" class="header">
-			<a href="main.htm"><img src="img/logo.png" /></a>
+			<a href="index"><img src="img/logo.png" /></a>
 		</div>
 		<div id="form2" class="header">
 			<form action="myProfile.htm" method="get">

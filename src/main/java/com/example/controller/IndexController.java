@@ -21,7 +21,7 @@ public class IndexController {
 	
 	@RequestMapping(value="/index", method = RequestMethod.GET)
 	public String indexController(HttpServletRequest req) {
-		if(req.getAttribute("loggedUser") != null)
+		if(req.getSession().getAttribute("loggedUser") != null)
 			return "main";
 		return "index";
 	}
@@ -98,6 +98,8 @@ public class IndexController {
 	}
 	@RequestMapping(value="/changeProfile", method = RequestMethod.POST)
 	public String changeProfile(HttpServletRequest req, Model model){
+		if(req.getSession().getAttribute("loggedUser") == null)
+			return "index";
 		User u = (User) req.getSession().getAttribute("loggedUser");
 		if(req.getParameter("password") != null) {
 			String password = req.getParameter("password");

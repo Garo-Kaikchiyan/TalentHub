@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import model.Answer;
 import model.Question;
@@ -41,6 +40,7 @@ public class ForumController {
 				e.printStackTrace();
 			}
 		model.addAttribute("endIndex", allJavaQuestions.size());
+		model.addAttribute("forumName", "Java Forum");
 		req.getSession().setAttribute("questions", allJavaQuestions);
 		req.getSession().setAttribute("forum", "javaForum");
 		return "forum";
@@ -48,13 +48,15 @@ public class ForumController {
 	
 	@RequestMapping(value="/jsForum", method = RequestMethod.GET) 
 	public String goToJSForums(HttpServletRequest req, Model model) {
-		if(allJavaQuestions.isEmpty())
+		if(allJSQuestions.isEmpty())
 			try {
-				allJavaQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllPosts("jsForum");
+				allJSQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllPosts("jsForum");
 			} catch (SQLException e) {
 				System.out.println("Problem retrieving js forum questions");
 				e.printStackTrace();
 			}
+		model.addAttribute("endIndex", allJSQuestions.size());
+		model.addAttribute("forumName", "JavaScript Forum");
 		req.getSession().setAttribute("questions", allJSQuestions);
 		req.getSession().setAttribute("forum", "jsForum");
 		return "forum";
@@ -62,13 +64,15 @@ public class ForumController {
 	
 	@RequestMapping(value="/androidForum", method = RequestMethod.GET) 
 	public String goToAndroidForums(HttpServletRequest req, Model model) {
-		if(allJavaQuestions == null)
+		if(allAndroidQuestions.isEmpty())
 			try {
-				allJavaQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllPosts("androidForum");
+				allAndroidQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllPosts("androidForum");
 			} catch (SQLException e) {
 				System.out.println("Problem retrieving android forum questions");
 				e.printStackTrace();
 			}
+		model.addAttribute("endIndex", allAndroidQuestions.size());
+		model.addAttribute("forumName", "Android Forum");
 		req.getSession().setAttribute("questions", allAndroidQuestions);
 		req.getSession().setAttribute("forum", "androidForum");
 		return "forum";
@@ -77,13 +81,15 @@ public class ForumController {
 	@RequestMapping(value="/phpForum", method = RequestMethod.GET) 
 	public String goToPhpForums(HttpServletRequest req, Model model) {
 
-		if(allJavaQuestions.isEmpty())
+		if(allPhpQuestions.isEmpty())
 			try {
-				allJavaQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllPosts("phpForum");
+				allPhpQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllPosts("phpForum");
 			} catch (SQLException e) {
 				System.out.println("Problem retrieving php forum questions");
 				e.printStackTrace();
 			}
+		model.addAttribute("endIndex", allPhpQuestions.size());
+		model.addAttribute("forumName", "PHP Forum");
 		req.getSession().setAttribute("questions", allPhpQuestions);
 		req.getSession().setAttribute("forum", "phpForum");
 		return "forum";
@@ -91,6 +97,8 @@ public class ForumController {
 
 	@RequestMapping(value="/createQuestion", method = RequestMethod.POST) 
 	public String createQuestion(HttpServletRequest req){
+		if(req.getSession().getAttribute("loggedUser") == null)
+			return "index";
 		User u = (User) req.getSession().getAttribute("loggedUser");
 		System.out.println(u.getEmail());
 		Question q = new Question(req.getParameter("subject"), u.getEmail(), req.getParameter("text"), u.getFirstName(), u.getLastName());
@@ -102,6 +110,8 @@ public class ForumController {
 	
 	@RequestMapping(value="/thread", method = RequestMethod.GET)
 	public String viewQuestion(HttpServletRequest req, Model mod){
+		if(req.getSession().getAttribute("loggedUser") == null)
+			return "index";
 		Question q = null;
 		switch(req.getSession().getAttribute("forum").toString()){
 		case "javaForum":
@@ -131,12 +141,16 @@ public class ForumController {
 	}
 
 	@RequestMapping(value="/createTopic", method = RequestMethod.GET) 
-	public String createTopic(Model model) {
+	public String createTopic(Model model, HttpServletRequest req) {
+		if(req.getSession().getAttribute("loggedUser") == null)
+			return "index";
 		return "create_topic";
 	}
 	
 	@RequestMapping(value="/addAnswer", method = RequestMethod.POST)
 	public String addAnswer(HttpServletRequest req, Model mod){
+		if(req.getSession().getAttribute("loggedUser") == null)
+			return "index";
 		User u = (User) req.getSession().getAttribute("loggedUser");
 		Question q = (Question) req.getSession().getAttribute("question");
 		Answer a = new Answer(q.getQuestion_title(), u.getEmail(), req.getParameter("text"));
