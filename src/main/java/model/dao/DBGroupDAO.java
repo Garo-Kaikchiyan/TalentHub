@@ -41,20 +41,18 @@ public class DBGroupDAO implements IGroupDAO {
 		return success;
 	}
 	
-//	@Override
-//	public ArrayList<Group> getAllGroups() throws SQLException {
-//		ArrayList<Group> allGroups = new ArrayList<>();
-//		String query= "SELECT group_name, group_message, FROM talentHub.Groups ";
-//		PreparedStatement st=manager.getConnection().prepareStatement(query);
-//		st.setString(1, forum_group);
-//		ResultSet rs=st.executeQuery();
-//		while(rs.next()){
-//			Question q=new Question(rs.getString(1),rs.getString(2),rs.getString(5),rs.getString(3), rs.getString(4));
-//			q.setDate_created(rs.getDate(6));
-//			questionsFromGroup.add(q);
-//		}
-//		st.close();
-//		return questionsFromGroup;
-//	}
+	@Override
+	public ArrayList<Group> getAllGroups() throws SQLException {
+		ArrayList<Group> allGroups = new ArrayList<>();
+		String query= "SELECT group_name FROM talentHub.Groups ";
+		PreparedStatement st=manager.getConnection().prepareStatement(query);
+		ResultSet rs=st.executeQuery();
+		while(rs.next()){
+			Group g = new Group(rs.getString(1));
+			allGroups.add(g);
+		}
+		st.close();
+		return allGroups;
+	}
 
 }

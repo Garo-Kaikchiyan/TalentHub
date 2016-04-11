@@ -154,20 +154,21 @@ class DBUserDAO implements IUserDAO {
 
 	@Override
 	public User getUser(String email) {
-		String query = "SELECT first_name, last_name, email, SHA1(password), gender, birth_date, user_photo FROM users WHERE email = " + email + ";";
-		Statement st;
+		String query = "SELECT first_name, last_name, user_email, gender, birth_date, user_photo FROM users WHERE user_email = ?;";
+		PreparedStatement st;
 		try {
-			st = manager.getConnection().createStatement();
-			ResultSet result = st.executeQuery(query);
+			st = manager.getConnection().prepareStatement(query);
+			st.setString(1, email);
+			ResultSet result = st.executeQuery();
 			while(result.next()){
 				System.out.println("row taken");
 				User u = new User(result.getString(1),
 								  result.getString(2),
 						          result.getString(3),
+						          "",
 						          result.getString(4),
-						          result.getString(5),
-						          result.getDate(6));
-				u.setPhoto(result.getString(7));
+						          result.getDate(5));
+				u.setPhoto(result.getString(6));
 				return u;
 			}
 			return null;
