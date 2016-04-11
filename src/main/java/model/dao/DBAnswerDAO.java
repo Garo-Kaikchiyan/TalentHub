@@ -59,6 +59,7 @@ public class DBAnswerDAO implements IAnswerDAO {
 			u.setJsAnswers(rs.getInt(11));
 			u.setAndroidAnswers(rs.getInt(12));
 			u.setEeAnswers(rs.getInt(13));
+			u.setAllForumEntrys(IUserDAO.getDAO(model.dao.IUserDAO.DataSource.DB).calculateAllPosts(u)); 
 			a.setOwner(u);
 			answersForQuestion.add(a);
 		}
@@ -67,7 +68,7 @@ public class DBAnswerDAO implements IAnswerDAO {
 	}
 
 	@Override
-	public ArrayList<Answer> getAllPosts(User newUser) throws SQLException {
+	public ArrayList<Answer> getAllAnswer(User newUser) throws SQLException {
 		ArrayList<Answer> answersForUser = new ArrayList<>();
 		String query = "SELECT question_title,answer_text,date_created,likes FROM talenthub.Answers WHERE user_email=?";
 		PreparedStatement st = manager.getConnection().prepareStatement(query);
