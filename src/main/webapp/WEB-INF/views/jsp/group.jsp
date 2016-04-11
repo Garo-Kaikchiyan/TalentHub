@@ -46,7 +46,7 @@
    <tr>
       <td>${loop.index}</td>
       <td>${posts[loop.index-1].post }</td>
-      <td>${posts[loop.index-1].user_name }</td>
+      <td>${posts[loop.index-1].owner.firstName } ${posts[loop.index-1].owner.lastName }</td>
       <td>${posts[loop.index-1].date_created}</td>
       <td>
       	<form action="viewPost" method="get">
@@ -59,7 +59,7 @@
   </tbody>
 </table> 
 
-<a href="createTopic" class="btn btn-primary" style="float:right">Create post</a>
+<a href="createPost" class="btn btn-primary" style="float:right">Create post</a>
 
 
 </body>

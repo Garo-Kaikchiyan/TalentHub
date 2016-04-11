@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Post {
 	private int post_id;
@@ -9,11 +10,17 @@ public class Post {
 	private String post;
 	private Date date_created;
 	private User owner;
-	public Post(String user_email, String post_title, String post) {
-		super();
+	private ArrayList<Comment> comments;
+	public Post(String user_email, String post) {
 		this.user_email = user_email;
-		this.post_title = post_title;
 		this.post = post;
+		comments = new ArrayList();
+	}
+	public ArrayList<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(ArrayList<Comment> comments) {
+		this.comments = comments;
 	}
 	public int getPost_id() {
 		return post_id;

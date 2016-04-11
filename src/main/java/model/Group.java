@@ -14,6 +14,7 @@ public class Group {
 	public Group(String group_name) {
 		super();
 		this.group_name = group_name;
+		posts = new ArrayList<>();
 	}
 
 	public ArrayList<User> getMembers() {

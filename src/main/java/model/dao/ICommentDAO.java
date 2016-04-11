@@ -1,7 +1,7 @@
 package model.dao;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 import model.User;
 import model.Comment;
@@ -15,8 +15,8 @@ public interface ICommentDAO {
 
 	boolean addComment(Post post,Comment comment,User newUser);
 
-	List<Comment> getAllComments(User user) throws SQLException;
-	List<Comment> getAllComments(Post post) throws SQLException;
+	ArrayList<Comment> getAllComments(User user) throws SQLException;
+	ArrayList<Comment> getAllComments(Post post) throws SQLException;
 	
 
 	static ICommentDAO getDAO(DataSource ds) {

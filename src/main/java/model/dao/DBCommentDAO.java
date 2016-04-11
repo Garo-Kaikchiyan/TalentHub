@@ -39,7 +39,7 @@ public class DBCommentDAO implements ICommentDAO {
 	}
 
 	@Override
-	public List<Comment> getAllComments(User newUser) throws SQLException {
+	public ArrayList<Comment> getAllComments(User newUser) throws SQLException {
 		ArrayList<Comment> commentsByUser = new ArrayList<>();
 		String query = "SELECT comment_id,comment_text,date_created FROM talenthub.Comments WHERE user_email=?;";
 		PreparedStatement st = manager.getConnection().prepareStatement(query);
@@ -57,11 +57,11 @@ public class DBCommentDAO implements ICommentDAO {
 	}
 
 	@Override
-	public List<Comment> getAllComments(Post post) throws SQLException {
-		ArrayList<Comment> commentsByUser = new ArrayList<>();
-		String query = "SELECT c.comment_id,c.user_email,c.comment_text,c.date_created,u.first_name"
+	public ArrayList<Comment> getAllComments(Post post) throws SQLException {
+		ArrayList<Comment> commentsByPost = new ArrayList<>();
+		String query = "SELECT c.comment_id,c.user_email,c.comment_text,c.date_created,u.first_name,"
 				+ "u.last_name,u.birth_date,u.gender,u.user_photo,u.php_answers,u.js_answers,u.android_answers,u.ee_answers "
-						+ " FROM talenthub.Comments c, talenthub.Users u WHERE post_id=? AND u.user_email=p.user_email;";
+						+ " FROM talenthub.Comments c, talenthub.Users u WHERE post_id=? AND u.user_email=c.user_email;";
 		PreparedStatement st = manager.getConnection().prepareStatement(query);
 		st.setInt(1, post.getPost_id());
 
@@ -77,10 +77,11 @@ public class DBCommentDAO implements ICommentDAO {
 			u.setAndroidAnswers(rs.getInt("android_answers"));
 			u.setEeAnswers(rs.getInt("ee_answers"));
 			c.setOwner(u);
-			commentsByUser.add(c);
+			commentsByPost.add(c);
+			System.out.println("comment added");
 		}
 		st.close();
-		return commentsByUser;
+		return commentsByPost;
 	}
 	
 }
