@@ -67,7 +67,7 @@ public class DBAnswerDAO implements IAnswerDAO {
 	}
 
 	@Override
-	public ArrayList<Answer> getAllPosts(User newUser) throws SQLException {
+	public ArrayList<Answer> getAllAnswer(User newUser) throws SQLException {
 		ArrayList<Answer> answersForUser = new ArrayList<>();
 		String query = "SELECT question_title,answer_text,date_created,likes FROM talenthub.Answers WHERE user_email=?";
 		PreparedStatement st = manager.getConnection().prepareStatement(query);
