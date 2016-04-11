@@ -30,9 +30,18 @@ public class GroupController {
 	}
 	
 	@RequestMapping(value="/viewGroups", method = RequestMethod.GET)
-	public String createGroup(HttpServletRequest req, Model model){ 
+	public String viewGroups(HttpServletRequest req, Model model){ 
 		return "groups";
 	}
 	
+	@RequestMapping(value="/createGroup", method = RequestMethod.GET)
+	public String createGroup(HttpServletRequest req, Model model){ 
+		return "create_group";
+	}
+	
+	@RequestMapping(value="/createNewGroup", method = RequestMethod.GET)
+	public String createNewGroup(HttpServletRequest req, Model model){ 
+		return "create_group";
+	}
 	
 }

@@ -30,13 +30,36 @@
 		<a href="logout" class="submit1 btn btn-primary btn-xs">Logout</a>
 		</form>
 	</div>
-	<div class="bodyx">
-<br><br><br>
-	<a href="#" class="btn btn-primary btn-lg2">Group name</a>
-	<br>
-	<form action="createGroup" method="get">
-	<button class="btn btn-success" style="float:right">Create group</button></form>
-</div>
+	<br><br><br><br><br><br>
+	<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Theme</th>
+      <th>Creator</th>
+      <th>Date of creation</th>
+    </tr>
+  </thead>
+  <tbody>
+  <c:forEach begin="${startIndex + 1}" end="${endIndex}" varStatus="loop">
+   <tr>
+      <td>${loop.index}</td>
+      <td>${questions[loop.index-1].question_title }</td>
+      <td>${questions[loop.index-1].user_name }</td>
+      <td>${questions[loop.index-1].date_created}</td>
+      <td>
+      	<form action="thread" method="get">
+      	<input type="hidden" value="${loop.index-1}" name="questionIndex">
+      	<input type="submit" value="view">
+      	</form>
+      </td>
+    </tr>
+   </c:forEach>
+  </tbody>
+</table> 
+
+<a href="createTopic" class="btn btn-primary" style="float:right">Create thread</a>
+
 
 </body>
 </html>
