@@ -12,9 +12,9 @@ public interface IAnswerDAO {
 		DB, JSON, XML, CSV, PLC
 	}
 	
-	boolean addAnswer(Answer answer,Question question,User newUser);
-	ArrayList<Answer> getAllAnswers(Question question) throws SQLException;
-	ArrayList<Answer> getAllAnswer(User newUser) throws SQLException;
+	public void addAnswer(Answer answer,Question question,User newUser) throws SQLException;;
+	public ArrayList<Answer> getAllAnswers(Question question) throws SQLException;
+	public ArrayList<Answer> getAllAnswer(User newUser) throws SQLException;
 	
 	public void vote(Answer answer,User newUser,boolean vote) throws SQLException;
 	

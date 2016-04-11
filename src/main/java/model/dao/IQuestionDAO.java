@@ -12,8 +12,8 @@ public interface IQuestionDAO {
 		DB, JSON, XML, CSV, PLC
 	}
 	
-	boolean addQuestion(User newUser,Question question, String forumGroup);
-	ArrayList<Question> getAllQuestions(User newUser) throws SQLException;
+	void addQuestion(User newUser,Question question, String forumGroup) throws SQLException;
+//	ArrayList<Question> getAllQuestions(User user) throws SQLException;
 	ArrayList<Question> getAllQuestions(String forum_group) throws SQLException;
 	static IQuestionDAO getDAO(DataSource ds) {
 		switch (ds) {

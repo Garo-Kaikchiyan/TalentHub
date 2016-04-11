@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,10 +31,17 @@ public class IndexController {
 	}
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String login(HttpServletRequest req, Model model){
-		User u = IUserDAO.getDAO(DataSource.DB).validateUser(req.getParameter("email"), req.getParameter("password"));
-		if (u != null){
-			req.getSession().setAttribute("loggedUser", u);
+	public String login(HttpServletRequest req, Model model){ 
+		User loggedUser = null;
+		try {
+			loggedUser = IUserDAO.getDAO(DataSource.DB).validateUser(req.getParameter("email"), req.getParameter("password"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in validateUser(String, String)");
+			return "errorPage";  
+		}
+		if (loggedUser != null){
+			req.getSession().setAttribute("loggedUser", loggedUser);
 			return "main";
 		}
 		else{

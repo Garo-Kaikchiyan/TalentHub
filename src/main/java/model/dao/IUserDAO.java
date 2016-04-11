@@ -1,7 +1,7 @@
 package model.dao;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 import model.User;
 
@@ -10,10 +10,6 @@ public interface IUserDAO {
 	enum DataSource {
 		DB, JSON, XML, CSV, PLC
 	}
-
-	boolean addUser(User newUser);
-
-	List<User> getAllUsers() throws SQLException;
 
 	static IUserDAO getDAO(DataSource ds) {
 		switch (ds) {
@@ -24,23 +20,28 @@ public interface IUserDAO {
 		}
 	}
 
-	User getUser(String email);
 
-	boolean updateUser(User loggedUser);
+	public void addUser(User newUser) throws SQLException;
 
-	boolean changeUserPass(String email, String pass);
+	public ArrayList<User> getAllUsers() throws SQLException;
+	
+	public User getUser(String email) throws SQLException;
 
-	User validateUser(String email, String pass);
+	public void updateUser(User loggedUser) throws SQLException;
 
-	boolean validateUser(String email);
+	public void changeUserPass(String email, String pass) throws SQLException;
 
-	void getLikesFromForumGroupPhp(User newUser) throws SQLException;
+	public User validateUser(String email, String pass) throws SQLException;
 
-	void getLikesFromForumGroupJs(User newUser) throws SQLException;
+	public boolean validateUser(String email) throws SQLException;
 
-	void getLikesFromForumGroupAndroid(User newUser) throws SQLException;
+	public void getLikesFromForumGroupPhp(User newUser) throws SQLException;
 
-	void getLikesFromForumGroupEnterprise(User newUser) throws SQLException;
+	public void getLikesFromForumGroupJs(User newUser) throws SQLException;
+
+	public void getLikesFromForumGroupAndroid(User newUser) throws SQLException;
+
+	public void getLikesFromForumGroupEnterprise(User newUser) throws SQLException;
 
 	public int calculateAllPosts(User newUser) throws SQLException;
 }

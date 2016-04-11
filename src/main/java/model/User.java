@@ -80,14 +80,14 @@ public class User {
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
-		// if(this.photo == null){
-		// if(gender.equals("male"))
-		// this.photo =
-		// "https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-512.png";
-		// else
-		// this.photo =
-		// "http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46b1c0c44b.png";
-		// }
+		 if(this.photo == null){
+		 if(gender.equals("male"))
+		 this.photo =
+		 "https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-512.png";
+		 else
+		 this.photo =
+		 "http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46b1c0c44b.png";
+		 }
 	}
 
 	public int getPhpAnswers() {

@@ -30,11 +30,12 @@ public class DBGroupDAO implements IGroupDAO {
 	@Override
 	public boolean addGroup(User newUser, Group group) {
 		boolean success = true;
-		String query = "INSERT INTO talentHub.Groups ( group_name,date_created) VALUES (?, NOW());";
+		String query = "INSERT INTO talentHub.Groups ( group_name, user_email, date_created) VALUES (?, ?, NOW());";
 		try (PreparedStatement st = manager.getConnection().prepareStatement(query);) {
 			st.setString(1, group.getGroup_name());
-			
+			st.setString(2, newUser.getEmail());
 			st.execute();
+			System.out.println("Grp added");
 		} catch (SQLException e) {
 			success = false;
 		}

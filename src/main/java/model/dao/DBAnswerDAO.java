@@ -25,43 +25,41 @@ public class DBAnswerDAO implements IAnswerDAO {
 	}
 
 	@Override
-	public boolean addAnswer(Answer answer, Question question, User newUser) {
-		boolean success = true;
+	public void addAnswer(Answer answer, Question question, User newUser) throws SQLException {
 		String query = "INSERT INTO talenthub.Answers (user_email,question_title,answer_text,date_created) VALUES(?,?,?,NOW());";
-		try (PreparedStatement st = manager.getConnection().prepareStatement(query)) {
+		PreparedStatement st = manager.getConnection().prepareStatement(query);
 			st.setString(1, newUser.getEmail());
 			st.setString(2, question.getQuestion_title());
 			st.setString(3, answer.getText());
 			st.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			success = false;
-		}
-
-		return success;
+			st.close();
 	}
 
 	@Override
 	public ArrayList<Answer> getAllAnswers(Question question) throws SQLException {
 		ArrayList<Answer> answersForQuestion = new ArrayList<>();
-		String query = "SELECT a.answer_id,a.user_email,a.answer_text,a.date_created, u.first_name, u.last_name,u.birth_date,u.gender,u.user_photo,u.php_answers,u.js_answers,u.android_answers,u.ee_answers FROM talenthub.Answers a, talenthub.Users u WHERE question_title=? AND u.user_email=a.user_email ORDER BY a.date_created DESC;";
+		String query = "SELECT a.answer_id, a.user_email, a.answer_text,a.date_created,"
+				+ "u.first_name, u.last_name, u.birth_date, u.gender,u.user_photo, u.php_answers, "
+				+ "u.js_answers, u.android_answers, u.ee_answers FROM talenthub.Answers a, "
+				+ "talenthub.Users u WHERE question_title=? AND u.user_email=a.user_email ORDER BY a.date_created DESC;";
+		
 		PreparedStatement st = manager.getConnection().prepareStatement(query);
 		st.setString(1, question.getQuestion_title());
 		ResultSet rs = st.executeQuery();
 		while (rs.next()) {
-			Answer a = new Answer(question.getQuestion_title(), rs.getString(2), rs.getString(3));
-			a.setDate_created(rs.getDate(4));
+			Answer answer = new Answer(question.getQuestion_title(), rs.getString(2), rs.getString(3));
+			answer.setDate_created(rs.getDate(4));
 			// a.setLikes(rs.getInt(5));
-			User u = new User(rs.getString(5), rs.getString(6), rs.getString(2), "", rs.getString(8), rs.getDate(7));
-			a.setAnswer_id(rs.getInt(1));
-			u.setPhoto(rs.getString(9));
-			u.setPhpAnswers(rs.getInt(10));
-			u.setJsAnswers(rs.getInt(11));
-			u.setAndroidAnswers(rs.getInt(12));
-			u.setEeAnswers(rs.getInt(13));
-			u.setAllForumEntrys(IUserDAO.getDAO(model.dao.IUserDAO.DataSource.DB).calculateAllPosts(u)); 
-			a.setOwner(u);
-			answersForQuestion.add(a);
+			answer.setAnswer_id(rs.getInt(1));
+//			User owner = new User(rs.getString(5), rs.getString(6), rs.getString(2), "", rs.getString(8), rs.getDate(7));
+//			owner.setPhoto(rs.getString(9));
+//			owner.setPhpAnswers(rs.getInt(10));
+//			owner.setJsAnswers(rs.getInt(11));
+//			owner.setAndroidAnswers(rs.getInt(12));
+//			owner.setEeAnswers(rs.getInt(13));
+//			owner.setAllForumEntrys(IUserDAO.getDAO(model.dao.IUserDAO.DataSource.DB).calculateAllPosts(owner)); 
+//			answer.setOwner(owner);
+			answersForQuestion.add(answer);
 		}
 		st.close();
 		return answersForQuestion;

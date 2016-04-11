@@ -16,6 +16,7 @@ import model.User;
 import model.dao.IAnswerDAO;
 import model.dao.IQuestionDAO;
 import model.dao.IQuestionDAO.DataSource;
+import model.dao.IUserDAO;
 
 @Controller
 public class ForumController {
@@ -23,6 +24,7 @@ public class ForumController {
 	private ArrayList<Question> allPhpQuestions = new ArrayList<>();
 	private ArrayList<Question> allAndroidQuestions = new ArrayList<>();
 	private ArrayList<Question> allJSQuestions = new ArrayList<>();
+	private ArrayList<User> allUsers = new ArrayList();
 	
 	@RequestMapping(value="/forum", method = RequestMethod.GET) 
 	public String goToForums() {
@@ -35,8 +37,9 @@ public class ForumController {
 			try {
 				allJavaQuestions.addAll(IQuestionDAO.getDAO(DataSource.DB).getAllQuestions("javaForum"));
 			} catch (SQLException e) {
-				System.out.println("Problem retrieving java forum questions");
 				e.printStackTrace();
+				System.out.println("Problem retrieving java forum questions");
+				return "errorPage";
 			}
 		model.addAttribute("endIndex", allJavaQuestions.size());
 		req.getSession().setAttribute("questions", allJavaQuestions);
@@ -50,8 +53,9 @@ public class ForumController {
 			try {
 				allJSQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllQuestions("jsForum");
 			} catch (SQLException e) {
-				System.out.println("Problem retrieving js forum questions");
 				e.printStackTrace();
+				System.out.println("Problem retrieving js forum questions");
+				return "errorPage";
 			}
 		model.addAttribute("endIndex", allJSQuestions.size());
 		req.getSession().setAttribute("questions", allJSQuestions);
@@ -65,8 +69,9 @@ public class ForumController {
 			try {
 				allAndroidQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllQuestions("androidForum");
 			} catch (SQLException e) {
-				System.out.println("Problem retrieving android forum questions");
 				e.printStackTrace();
+				System.out.println("Problem retrieving android forum questions");
+				return "errorPage";
 			}
 		model.addAttribute("endIndex", allAndroidQuestions.size());
 		req.getSession().setAttribute("questions", allAndroidQuestions);
@@ -81,8 +86,9 @@ public class ForumController {
 			try {
 				allPhpQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllQuestions("phpForum");
 			} catch (SQLException e) {
-				System.out.println("Problem retrieving php forum questions");
 				e.printStackTrace();
+				System.out.println("Problem retrieving php forum questions");
+				return "errorPage";
 			}
 		model.addAttribute("endIndex", allPhpQuestions.size());
 		req.getSession().setAttribute("questions", allPhpQuestions);
@@ -94,14 +100,19 @@ public class ForumController {
 	public String createQuestion(HttpServletRequest req){
 		if(req.getSession().getAttribute("loggedUser") == null)
 			return "index";
-		User u = (User) req.getSession().getAttribute("loggedUser");
-		System.out.println(u.getEmail());
-		Question q = new Question(req.getParameter("subject"), u.getEmail(), req.getParameter("text"), u.getFirstName(), u.getLastName());
+		User autor = (User) req.getSession().getAttribute("loggedUser");
+		Question question = new Question(req.getParameter("subject"), autor.getEmail(), req.getParameter("text"), autor.getFirstName(), autor.getLastName());
 		String forum = req.getSession().getAttribute("forum").toString();
-		u.setAllForumEntrys(u.getAllForumEntrys()+1);
-		q.setOwner(u);
-		IQuestionDAO.getDAO(DataSource.DB).addQuestion(u, q, forum);
-		addQuestionToList(forum, q);
+		try {
+			IQuestionDAO.getDAO(DataSource.DB).addQuestion(autor, question, forum);
+			autor.setAllForumEntrys(autor.getAllForumEntrys()+1);
+			question.setOwner(getUserByEmail(question.getUser_email()));
+			addQuestionToList(forum, question);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error adding question in " + forum);
+			return "errorPage";
+		}
 		return "redirect:/" + forum;
 	}
 	
@@ -109,36 +120,37 @@ public class ForumController {
 	public String viewQuestion(HttpServletRequest req, Model mod){
 		if(req.getSession().getAttribute("loggedUser") == null)
 			return "index";
-		Question q = null;
+		Question question = null;
 		switch(req.getSession().getAttribute("forum").toString()){
 		case "javaForum":
-			q = allJavaQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
+			question = allJavaQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
 			mod.addAttribute("forumName", "Java Forum");
 			break;
 		case "androidForum":
-			q = allAndroidQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
+			question = allAndroidQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
 			mod.addAttribute("forumName", "Android Forum");
 			break;
 		case "phpForum":
-			q = allPhpQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
+			question = allPhpQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
 			mod.addAttribute("forumName", "PHP Forum");
 			break;
 		case "jsForum":
-			q = allJSQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
+			question = allJSQuestions.get(Integer.parseInt(req.getParameter("questionIndex")));
 			mod.addAttribute("forumName", "JavaScript Forum");
 			break;
 		}
-		if(q.getAnswers().isEmpty()){
+		if(question.getAnswers().isEmpty()){
 			try {
-				q.setAnswers(IAnswerDAO.getDAO(model.dao.IAnswerDAO.DataSource.DB).getAllAnswers(q));
+				question.setAnswers(IAnswerDAO.getDAO(model.dao.IAnswerDAO.DataSource.DB).getAllAnswers(question));
 			} catch (SQLException e) {
 				System.out.println("Problem getting answers");
 				e.printStackTrace();
+				return "errorPage";
 			}
 		}
 
-		mod.addAttribute("answers", q.getAnswers());
-		mod.addAttribute("question", q);
+		mod.addAttribute("answers", question.getAnswers());
+		mod.addAttribute("question", question);
 		return "forum_look";
 	}
 
@@ -153,13 +165,20 @@ public class ForumController {
 	public String addAnswer(HttpServletRequest req, Model mod){
 		if(req.getSession().getAttribute("loggedUser") == null)
 			return "index";
-		User u = (User) req.getSession().getAttribute("loggedUser");
-		Question q = (Question) req.getSession().getAttribute("question");
-		Answer a = new Answer(q.getQuestion_title(), u.getEmail(), req.getParameter("text"));
-		IAnswerDAO.getDAO(model.dao.IAnswerDAO.DataSource.DB).addAnswer(a, q, u);
-		u.setAllForumEntrys(u.getAllForumEntrys()+1);
-		a.setOwner(u);
-		q.addAnswer(a);
+		User user = (User) req.getSession().getAttribute("loggedUser");
+		Question question = (Question) req.getSession().getAttribute("question");
+		Answer answer = new Answer(question.getQuestion_title(), user.getEmail(), req.getParameter("text"));
+		try {
+			IAnswerDAO.getDAO(model.dao.IAnswerDAO.DataSource.DB).addAnswer(answer, question, user);
+			user.setAllForumEntrys(user.getAllForumEntrys()+1);
+			answer.setOwner(getUserByEmail(answer.getUser_email()));
+			question.addAnswer(answer);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Error adding answer");
+			return "errorPage";
+		}
 		return "redirect:/" + req.getSession().getAttribute("forum").toString();
 	}
 	
@@ -181,7 +200,21 @@ public class ForumController {
 		}
 	}
 	
-	
+	private User getUserByEmail(String email){
+		if(allUsers.isEmpty()){
+			try {
+				allUsers.addAll(IUserDAO.getDAO(model.dao.IUserDAO.DataSource.DB).getAllUsers());
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error with getAllUsers()");
+				return null;
+			}
+		}
+		for(int i = 0; i < allUsers.size(); i++)
+			if(allUsers.get(i).getEmail().equals(email))
+				return allUsers.get(i);
+		return null;
+	}
 	
 
 }
