@@ -214,7 +214,7 @@ class DBUserDAO implements IUserDAO {
 		while (rs.next()) {
 			likes += rs.getInt(1);
 		}
-		newUser.setPhpLikes(likes);
+		newUser.setJsAnswers(likes);
 	}
 
 	@Override
@@ -228,7 +228,7 @@ class DBUserDAO implements IUserDAO {
 		while (rs.next()) {
 			likes += rs.getInt(1);
 		}
-		newUser.setPhpLikes(likes);
+		newUser.setAndroidLikes(likes);
 	}
 
 	@Override
@@ -242,7 +242,7 @@ class DBUserDAO implements IUserDAO {
 		while (rs.next()) {
 			likes += rs.getInt(1);
 		}
-		newUser.setPhpLikes(likes);
+		newUser.setJavaLikes(likes);
 	}
 
 }

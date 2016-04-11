@@ -10,6 +10,7 @@ public class User {
 	private int phpLikes;
 	private int jsLikes;
 	private int javaLikes;
+	private int androidLikes;
 
 	public User(String firstName, String lastName, String email, String password, String gender, Date birth) {
 		super();
@@ -153,4 +154,13 @@ public class User {
 		this.javaLikes = javaLikes;
 	}
 
+	public int getAndroidLikes() {
+		return androidLikes;
+	}
+
+	public void setAndroidLikes(int androidLikes) {
+		this.androidLikes = androidLikes;
+	}
+
+	
 }
