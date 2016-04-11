@@ -27,7 +27,7 @@ public class GroupController {
 			System.out.println("Problem getting groups");
 			e.printStackTrace();
 		}
-		return"";
+		return "groups";
 	}
 	
 	@RequestMapping(value="/viewGroups", method = RequestMethod.GET)

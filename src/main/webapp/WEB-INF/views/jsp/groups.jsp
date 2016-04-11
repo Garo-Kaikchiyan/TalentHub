@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" 
            uri="http://java.sun.com/jsp/jstl/core" %>
+           <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +33,12 @@
 	</div>
 	<div class="bodyx">
 <br><br><br>
-	<a href="#" class="btn btn-primary btn-lg2">Group name</a>
+	<c:forEach begin="1" end="${fn:length(groups)}" varStatus="loop">
+	<form action="viewGrp" method="post">
+		<input type="submit" value="${groups[loop.index-1].group_name}"/>
+		<input type="hidden" value ="${loop.index-1 }" name="grpIndex"/>
+	</form>
+	</c:forEach>
 	<br>
 	<form action="createGroup" method="get">
 	<button class="btn btn-success" style="float:right">Create group</button></form>
