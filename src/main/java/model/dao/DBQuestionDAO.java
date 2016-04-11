@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.neo4j.cypher.internal.compiler.v2_2.planner.logical.cardinality.triplet.calculateOverlapCardinality;
+
 import model.Question;
 import model.User;
 import model.db.DBManager;
@@ -76,6 +78,7 @@ public class DBQuestionDAO implements IQuestionDAO {
 			u.setJsAnswers(rs.getInt(11));
 			u.setAndroidAnswers(rs.getInt(12));
 			u.setEeAnswers(rs.getInt(13));
+			u.setAllForumEntrys(IUserDAO.getDAO(model.dao.IUserDAO.DataSource.DB).calculateAllPosts(u)); 
 			q.setOwner(u);
 			questionsFromGroup.add(q);
 		}

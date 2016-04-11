@@ -30,5 +30,6 @@ public interface IUserDAO {
 	User validateUser(String email, String pass);
 	boolean validateUser(String email);
 	void getLikesFromForumGroupPhp(User newUser) throws SQLException;
+	public int calculateAllPosts(User newUser) throws SQLException;
 }
 

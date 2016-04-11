@@ -177,6 +177,7 @@ class DBUserDAO implements IUserDAO {
 			return null;
 		}
 	}
+	@Override
 	public int calculateAllPosts(User newUser) throws SQLException{
 		String query="SELECT question_title FROM talenthub.Questions q WHERE q.user_email=?;";
 		PreparedStatement st=manager.getConnection().prepareStatement(query);

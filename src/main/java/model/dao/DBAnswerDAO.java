@@ -59,6 +59,7 @@ public class DBAnswerDAO implements IAnswerDAO {
 			u.setJsAnswers(rs.getInt(11));
 			u.setAndroidAnswers(rs.getInt(12));
 			u.setEeAnswers(rs.getInt(13));
+			u.setAllForumEntrys(IUserDAO.getDAO(model.dao.IUserDAO.DataSource.DB).calculateAllPosts(u)); 
 			a.setOwner(u);
 			answersForQuestion.add(a);
 		}

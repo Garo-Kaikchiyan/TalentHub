@@ -70,7 +70,7 @@
 					</div>
 					<div>
 						<strong>Мнения:</strong>
-						<span>35</span>
+						<span>${question.owner.allForumEntrys }</span>
 					</div>
 					<div>
 						<strong>Регистриран:</strong>
@@ -127,7 +127,7 @@
 					</div>
 					<div>
 						<strong>Мнения:</strong>
-						<span>35</span>
+						<span>${answers[loop.index-1].owner.allForumEntrys}</span>
 					</div>
 					<div>
 						<strong>Регистриран:</strong>
