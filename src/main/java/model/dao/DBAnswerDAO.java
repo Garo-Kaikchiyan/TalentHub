@@ -44,7 +44,7 @@ public class DBAnswerDAO implements IAnswerDAO {
 	@Override
 	public ArrayList<Answer> getAllAnswers(Question question) throws SQLException {
 		ArrayList<Answer> answersForQuestion = new ArrayList<>();
-		String query = "SELECT a.answer_id,a.user_email,a.answer_text,a.date_created, u.first_name, u.last_name,u.birth_date,u.gender,u.user_photo,u.php_answers,u.js_answers,u.android_answers,u.ee_answers FROM talenthub.Answers a, talenthub.Users u WHERE question_title=? AND u.user_email=a.user_email;";
+		String query = "SELECT a.answer_id,a.user_email,a.answer_text,a.date_created, u.first_name, u.last_name,u.birth_date,u.gender,u.user_photo,u.php_answers,u.js_answers,u.android_answers,u.ee_answers FROM talenthub.Answers a, talenthub.Users u WHERE question_title=? AND u.user_email=a.user_email ORDER BY a.date_created DESC;";
 		PreparedStatement st = manager.getConnection().prepareStatement(query);
 		st.setString(1, question.getQuestion_title());
 		ResultSet rs = st.executeQuery();

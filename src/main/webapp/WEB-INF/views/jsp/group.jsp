@@ -42,7 +42,7 @@
     </tr>
   </thead>
   <tbody>
-  <c:forEach begin="1" end="${fn:length(groups)}" varStatus="loop">
+  <c:forEach begin="1" end="${fn:length(posts)}" varStatus="loop">
    <tr>
       <td>${loop.index}</td>
       <td>${posts[loop.index-1].post }</td>
@@ -59,7 +59,7 @@
   </tbody>
 </table> 
 
-<a href="createTopic" class="btn btn-primary" style="float:right">Create thread</a>
+<a href="createTopic" class="btn btn-primary" style="float:right">Create post</a>
 
 
 </body>

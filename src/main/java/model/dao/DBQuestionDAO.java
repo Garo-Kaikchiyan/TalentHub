@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.neo4j.cypher.internal.compiler.v2_2.planner.logical.cardinality.triplet.calculateOverlapCardinality;
 
 import model.Question;
 import model.User;
@@ -64,7 +63,7 @@ public class DBQuestionDAO implements IQuestionDAO {
 	@Override
 	public ArrayList<Question> getAllQuestions(String forum_group) throws SQLException {
 		ArrayList<Question> questionsFromGroup=new ArrayList<>();
-		String query= "SELECT q.question_title,q.user_email,u.first_name,u.last_name,q.question_text,q.date_created,u.birth_date,u.gender,u.user_photo,u.php_answers,u.js_answers,u.android_answers,u.ee_answers FROM talenthub.Questions q, talenthub.Users u WHERE q.user_email=u.user_email AND q.forum_group=?;";
+		String query= "SELECT q.question_title,q.user_email,u.first_name,u.last_name,q.question_text,q.date_created,u.birth_date,u.gender,u.user_photo,u.php_answers,u.js_answers,u.android_answers,u.ee_answers FROM talenthub.Questions q, talenthub.Users u WHERE q.user_email=u.user_email AND q.forum_group=? ORDER BY q.date_created ASC;";
 		PreparedStatement st=manager.getConnection().prepareStatement(query);
 		st.setString(1, forum_group);
 		ResultSet rs=st.executeQuery();
