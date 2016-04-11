@@ -8,6 +8,7 @@ public class Post {
 	private String post_title;
 	private String post;
 	private Date date_created;
+	private User owner;
 	public Post(String user_email, String post_title, String post) {
 		super();
 		this.user_email = user_email;

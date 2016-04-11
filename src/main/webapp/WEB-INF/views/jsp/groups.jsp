@@ -35,7 +35,7 @@
 <br><br><br>
 	<c:forEach begin="1" end="${fn:length(groups)}" varStatus="loop">
 	<form action="viewGrp" method="post">
-		<input type="submit" value="${groups[loop.index-1].group_name}"/>
+		<button class="btn btn-primary btn-lg2" value="${groups[loop.index-1].group_name}" type="submit">${groups[loop.index-1].group_name}</button>
 		<input type="hidden" value ="${loop.index-1 }" name="grpIndex"/>
 	</form>
 	</c:forEach>

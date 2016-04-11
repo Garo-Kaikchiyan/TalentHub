@@ -98,6 +98,7 @@ public class ForumController {
 		System.out.println(u.getEmail());
 		Question q = new Question(req.getParameter("subject"), u.getEmail(), req.getParameter("text"), u.getFirstName(), u.getLastName());
 		String forum = req.getSession().getAttribute("forum").toString();
+		q.setOwner(u);
 		IQuestionDAO.getDAO(DataSource.DB).addQuestion(u, q, forum);
 		addQuestionToList(forum, q);
 		return "redirect:/" + forum;
@@ -155,6 +156,7 @@ public class ForumController {
 		Question q = (Question) req.getSession().getAttribute("question");
 		Answer a = new Answer(q.getQuestion_title(), u.getEmail(), req.getParameter("text"));
 		IAnswerDAO.getDAO(model.dao.IAnswerDAO.DataSource.DB).addAnswer(a, q, u);
+		a.setOwner(u);
 		q.addAnswer(a);
 		return "redirect:/" + req.getSession().getAttribute("forum").toString();
 	}

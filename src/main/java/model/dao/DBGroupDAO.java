@@ -44,11 +44,12 @@ public class DBGroupDAO implements IGroupDAO {
 	@Override
 	public ArrayList<Group> getAllGroups() throws SQLException {
 		ArrayList<Group> allGroups = new ArrayList<>();
-		String query= "SELECT group_name FROM talentHub.Groups ";
+		String query= "SELECT group_name FROM talentHub.Groups;";
 		PreparedStatement st=manager.getConnection().prepareStatement(query);
 		ResultSet rs=st.executeQuery();
 		while(rs.next()){
 			Group g = new Group(rs.getString(1));
+			System.out.println("Win");
 			allGroups.add(g);
 		}
 		st.close();

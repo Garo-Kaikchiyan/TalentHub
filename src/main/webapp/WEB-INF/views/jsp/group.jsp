@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" 
            uri="http://java.sun.com/jsp/jstl/core" %>
+           <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,21 +36,21 @@
   <thead>
     <tr>
       <th>#</th>
-      <th>Theme</th>
+      <th>Post</th>
       <th>Creator</th>
       <th>Date of creation</th>
     </tr>
   </thead>
   <tbody>
-  <c:forEach begin="${startIndex + 1}" end="${endIndex}" varStatus="loop">
+  <c:forEach begin="1" end="${fn:length(groups)}" varStatus="loop">
    <tr>
       <td>${loop.index}</td>
-      <td>${questions[loop.index-1].question_title }</td>
-      <td>${questions[loop.index-1].user_name }</td>
-      <td>${questions[loop.index-1].date_created}</td>
+      <td>${posts[loop.index-1].post }</td>
+      <td>${posts[loop.index-1].user_name }</td>
+      <td>${posts[loop.index-1].date_created}</td>
       <td>
-      	<form action="thread" method="get">
-      	<input type="hidden" value="${loop.index-1}" name="questionIndex">
+      	<form action="viewPost" method="get">
+      	<input type="hidden" value="${loop.index-1}" name="postIndex">
       	<input type="submit" value="view">
       	</form>
       </td>

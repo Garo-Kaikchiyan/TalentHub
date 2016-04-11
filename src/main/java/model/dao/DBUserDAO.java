@@ -92,7 +92,7 @@ class DBUserDAO implements IUserDAO {
 
 	@Override
 	public User validateUser(String email, String pass) {
-		String query = "SELECT first_name, last_name, user_email, gender, birth_date  FROM users WHERE user_password =SHA1('" + pass + "');";
+		String query = "SELECT first_name, last_name, user_email, gender, birth_date, user_photo  FROM users WHERE user_password =SHA1('" + pass + "');";
 		Statement st;
 		try {
 			st = manager.getConnection().createStatement();
@@ -110,6 +110,7 @@ class DBUserDAO implements IUserDAO {
 					          pass,
 					          result.getString(4),
 					          result.getDate(5));
+					u.setPhoto(result.getString(6));
 					return u;
 				}
 			}
