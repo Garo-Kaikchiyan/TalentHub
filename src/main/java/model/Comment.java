@@ -8,7 +8,8 @@ public class Comment {
 	private String user_email;
 	private String text;
 	private Date date_created;
-
+	private User owner;
+	
 	public Comment(int post_id, String user_email, String text) {
 		super();
 		this.post_id = post_id;
@@ -56,4 +57,13 @@ public class Comment {
 		this.date_created = date_created;
 	}
 
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+	
+	
 }

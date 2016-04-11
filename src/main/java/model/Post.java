@@ -45,6 +45,12 @@ public class Post {
 	public void setDate_created(Date date_created) {
 		this.date_created = date_created;
 	}
+	public User getOwner() {
+		return owner;
+	}
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
 	
 	
 }
