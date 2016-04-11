@@ -34,7 +34,7 @@ public class DBGroupDAO implements IGroupDAO {
 		try (PreparedStatement st = manager.getConnection().prepareStatement(query);) {
 			st.setString(1, group.getGroup_name());
 			
-			st.execute();
+			st.executeUpdate();
 		} catch (SQLException e) {
 			success = false;
 		}
@@ -44,7 +44,7 @@ public class DBGroupDAO implements IGroupDAO {
 	@Override
 	public ArrayList<Group> getAllGroups() throws SQLException {
 		ArrayList<Group> allGroups = new ArrayList<>();
-		String query= "SELECT group_name FROM talentHub.Groups ";
+		String query= "SELECT group_name FROM talentHub.Groups; ";
 		PreparedStatement st=manager.getConnection().prepareStatement(query);
 		ResultSet rs=st.executeQuery();
 		while(rs.next()){

@@ -35,7 +35,7 @@ public class DBPostDAO implements IPostDAO {
 			st.setString(3, post.getPost_title());
 			st.setString(4, post.getPost());
 			// date of birth
-			st.execute();
+			st.executeUpdate();
 		} catch (SQLException e) {
 			success = false;
 		}
