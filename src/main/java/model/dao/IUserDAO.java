@@ -14,7 +14,6 @@ public interface IUserDAO {
 	boolean addUser(User newUser);
 
 	List<User> getAllUsers() throws SQLException;
-	
 
 	static IUserDAO getDAO(DataSource ds) {
 		switch (ds) {
@@ -24,12 +23,24 @@ public interface IUserDAO {
 			throw new IllegalArgumentException();
 		}
 	}
+
 	User getUser(String email);
+
 	boolean updateUser(User loggedUser);
+
 	boolean changeUserPass(String email, String pass);
+
 	User validateUser(String email, String pass);
+
 	boolean validateUser(String email);
+
 	void getLikesFromForumGroupPhp(User newUser) throws SQLException;
+
+	void getLikesFromForumGroupJs(User newUser) throws SQLException;
+
+	void getLikesFromForumGroupAndroid(User newUser) throws SQLException;
+
+	void getLikesFromForumGroupEnterprise(User newUser) throws SQLException;
+
 	public int calculateAllPosts(User newUser) throws SQLException;
 }
-
