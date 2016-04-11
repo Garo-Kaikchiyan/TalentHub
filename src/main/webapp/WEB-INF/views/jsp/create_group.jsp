@@ -29,13 +29,13 @@
 	</div>
 		
 <br><br><br><br><br><br><br>
-	<form class="form-horizontal" action="createGroup"  method="post">
+	<form class="form-horizontal" action="createNewGroup"  method="post">
   <fieldset>
     <legend>Create new group</legend>
     <div class="form-group">
       <label for="textArea" class="col-lg-2 control-label">Name</label>
       <div class="col-lg-10" style="width:800px">
-        <textarea class="form-control" rows="1" id="textArea" name="subject"></textarea>
+        <textarea class="form-control" rows="1" id="textArea" name="groupName"></textarea>
       </div>
     </div>
     <div class="form-group">

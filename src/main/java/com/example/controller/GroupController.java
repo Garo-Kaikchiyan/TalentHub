@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import model.Group;
+import model.User;
 import model.dao.IGroupDAO;
 import model.dao.IGroupDAO.DataSource;
 @Controller
@@ -41,7 +42,9 @@ public class GroupController {
 	
 	@RequestMapping(value="/createNewGroup", method = RequestMethod.GET)
 	public String createNewGroup(HttpServletRequest req, Model model){ 
-		return "create_group";
+		Group g = new Group(req.getParameter("groupName"));
+		IGroupDAO.getDAO(DataSource.DB).addGroup((User) req.getSession().getAttribute("loggedUser"), g);
+		return "groups";
 	}
 	
 }
