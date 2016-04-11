@@ -188,4 +188,19 @@ class DBUserDAO implements IUserDAO {
 		newUser.setAllForumEntrys(allForumEntrys);
 		return allForumEntrys;
 	}
+
+	@Override
+	public void getLikesFromForumGroupPhp(User newUser) throws SQLException {
+		String query="SELECT v.votes FROM answers a,questions q WHERE a.user_email=? AND a.question_title="
+				+ "(SELECT question_title FROM questions q WHERE forum_group=phpGroup);";
+		PreparedStatement st=manager.getConnection().prepareStatement(query);
+		st.setString(1, newUser.getEmail());
+		ResultSet rs=st.executeQuery();
+		int likes=0;
+		while(rs.next()){
+			likes+=rs.getInt(1);
+		}
+		newUser.setPhpLikes(likes);
+	}
+	
 }

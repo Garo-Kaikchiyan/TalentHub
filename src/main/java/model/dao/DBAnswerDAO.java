@@ -115,9 +115,12 @@ public class DBAnswerDAO implements IAnswerDAO {
 				votes--;
 		}
 		answer.setLikes(votes);
-		// String update="UPDATE talenthub.Answers SET votes=?;";
-		// st=manager.getConnection().prepareStatement(update);
-		// st.setInt(1, votes);
-		// st.executeUpdate();
+		 String update="UPDATE talenthub.Answers SET votes=?;";
+		 st=manager.getConnection().prepareStatement(update);
+		 st.setInt(1, votes);
+		 st.executeUpdate();
+		st.close();
 	}
+
+	
 }

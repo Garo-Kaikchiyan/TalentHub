@@ -69,7 +69,7 @@ public class DBQuestionDAO implements IQuestionDAO {
 		while(rs.next()){
 			Question q=new Question(rs.getString(1),rs.getString(2),rs.getString(5),rs.getString(3), rs.getString(4));
 			q.setDate_created(rs.getDate(6));
-			User u = new User(rs.getString(3), rs.getString(4),rs.getString(1), "", rs.getString(8), rs.getDate(7));
+			User u = new User(rs.getString(3), rs.getString(4),rs.getString(2), "", rs.getString(8), rs.getDate(7));
 			u.setPhoto(rs.getString(9));
 			System.out.println(rs.getString(9));
 			u.setPhpAnswers(rs.getInt(10));

@@ -7,6 +7,9 @@ public class User {
 	private Date birth;
 	private int phpAnswers,jsAnswers,androidAnswers,eeAnswers;
 	private int allForumEntrys;
+	private int phpLikes;
+	private int jsLikes;
+	
 	public User(String firstName, String lastName, String email, String password, String gender, Date birth) {
 		super();
 		this.firstName = firstName;
@@ -122,6 +125,24 @@ public class User {
 	public void setAllForumEntrys(int allForumEntrys) {
 		this.allForumEntrys = allForumEntrys;
 	}
+
+	public int getPhpLikes() {
+		return phpLikes;
+	}
+
+	public void setPhpLikes(int phpLikes) {
+		this.phpLikes = phpLikes;
+	}
+
+	public int getJsLikes() {
+		return jsLikes;
+	}
+
+	public void setJsLikes(int jsLikes) {
+		this.jsLikes = jsLikes;
+	}
+
+	
 	
 	
 

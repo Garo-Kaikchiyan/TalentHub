@@ -29,5 +29,6 @@ public interface IUserDAO {
 	boolean changeUserPass(String email, String pass);
 	User validateUser(String email, String pass);
 	boolean validateUser(String email);
+	void getLikesFromForumGroupPhp(User newUser) throws SQLException;
 }
 
