@@ -4,6 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.example.controller.ForumController;
+
 import model.Answer;
 import model.Question;
 import model.User;
@@ -58,7 +61,7 @@ public class DBAnswerDAO implements IAnswerDAO {
 //			owner.setAndroidAnswers(rs.getInt(12));
 //			owner.setEeAnswers(rs.getInt(13));
 //			owner.setAllForumEntrys(IUserDAO.getDAO(model.dao.IUserDAO.DataSource.DB).calculateAllPosts(owner)); 
-//			answer.setOwner(owner);
+			answer.setOwner(ForumController.getUserByEmail(answer.getUser_email()));
 			answersForQuestion.add(answer);
 		}
 		st.close();

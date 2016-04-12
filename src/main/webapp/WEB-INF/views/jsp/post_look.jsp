@@ -65,19 +65,19 @@
 					</div>
 					<div>
 						<strong>Група:</strong>
-						<span>JavaEE</span>
+						<span>${group.group_name }</span>
 					</div>
 					<div>
-						<strong>Мнения:</strong>
-						<span>${post.owner.allForumEntrys }</span>
+						<strong></strong>
+						<span></span>
 					</div>
 					<div>
 						<strong>Регистриран:</strong>
 						<span>20 may 2011</span>
 					</div>
 					<div>
-						<strong>Ранг:</strong>
-						<span>Master</span>
+						<strong></strong>
+						<span></span>
 					</div>
 					<div>
 						<strong>Рождена дата:</strong>
@@ -92,7 +92,7 @@
 </div>
 			<!-- POST FOOTER -->
 			<div class="post-footer">
-				<a href="#content">Kym nachaloto</a>
+				<a href="#content"></a>
 			</div>
 		</div>
 		<c:forEach begin="1" end="${fn:length(comments)}" varStatus="loop">
@@ -122,23 +122,23 @@
 					</div>
 					<div>
 						<strong>Група:</strong>
-						<span>JavaEE</span>
+						<span>${group.group_name }</span>
 					</div>
 					<div>
-						<strong>Мнения:</strong>
-						<span>${comments[loop.index-1].owner.allForumEntrys}</span>
+						<strong></strong>
+						<span></span>
 					</div>
 					<div>
 						<strong>Регистриран:</strong>
-						<span>20 may 2011</span>
+						<span></span>
 					</div>
 					<div>
-						<strong>Ранг:</strong>
-						<span>Master</span>
+						<strong></strong>
+						<span></span>
 					</div>
 					<div>
 						<strong>Рождена дата:</strong>
-						<span>02.02.02</span>
+						<span></span>
 					</div>
 				</div>
 

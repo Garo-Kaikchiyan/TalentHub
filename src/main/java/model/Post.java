@@ -14,7 +14,7 @@ public class Post {
 	public Post(String user_email, String post) {
 		this.user_email = user_email;
 		this.post = post;
-		comments = new ArrayList();
+		comments = new ArrayList<>();
 	}
 	public ArrayList<Comment> getComments() {
 		return comments;
@@ -58,6 +58,6 @@ public class Post {
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
-	
+		
 	
 }

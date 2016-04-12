@@ -69,20 +69,24 @@ public class GroupController {
 	}
 	
 	@RequestMapping(value="/createNewPost", method = RequestMethod.POST)
-	public String createNewPost(HttpServletRequest req){
-		User u = (User) req.getSession().getAttribute("loggedUser");
-		Post p = new Post(u.getEmail(), req.getParameter("text"));
-		Group g = (Group) req.getSession().getAttribute("group");
-		g.getPosts().add(p);
+	public String createNewPost(HttpServletRequest req, Model mod){
+		User user = (User) req.getSession().getAttribute("loggedUser");
+		Post post = new Post(user.getEmail(), req.getParameter("text"));
+		Group group = (Group) req.getSession().getAttribute("group");
+		group.getPosts().add(post);
 		try {
-			g.setPosts(IPostDAO.getDAO(model.dao.IPostDAO.DataSource.DB).getAllPosts(g));
+			group.setPosts(IPostDAO.getDAO(model.dao.IPostDAO.DataSource.DB).getAllPosts(group));
+			post.setOwner(ForumController.getUserByEmail(post.getUser_email()));
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Error getting posts");
 		}
-		IPostDAO.getDAO(model.dao.IPostDAO.DataSource.DB).addPost(u, g, p);
-		return "groups";
+		IPostDAO.getDAO(model.dao.IPostDAO.DataSource.DB).addPost(user, group, post);
+		mod.addAttribute("comments", post.getComments());
+		mod.addAttribute("post", post);
+		return "post_look";
 	}
 	
 	@RequestMapping(value="/viewPost", method = RequestMethod.GET)
@@ -105,18 +109,22 @@ public class GroupController {
 	public String addComment(HttpServletRequest req, Model mod){
 		if(req.getSession().getAttribute("loggedUser") == null)
 			return "index";
-		User u = (User) req.getSession().getAttribute("loggedUser");
-		Post p = (Post) req.getSession().getAttribute("curPost");
-		Comment c = new Comment(p.getPost_id(), u.getEmail(), req.getParameter("text"));
-		ICommentDAO.getDAO(model.dao.ICommentDAO.DataSource.DB).addComment(p, c, u);
+		User user = (User) req.getSession().getAttribute("loggedUser");
+		Post post = (Post) req.getSession().getAttribute("curPost");
+		Comment comment = new Comment(post.getPost_id(), user.getEmail(), req.getParameter("text"));
+		ICommentDAO.getDAO(model.dao.ICommentDAO.DataSource.DB).addComment(post, comment, user);
 		try {
-			p.setComments(ICommentDAO.getDAO(model.dao.ICommentDAO.DataSource.DB).getAllComments(p));
+			post.setComments(ICommentDAO.getDAO(model.dao.ICommentDAO.DataSource.DB).getAllComments(post));
+			comment.setOwner(ForumController.getUserByEmail(comment.getUser_email()));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Error getting comments");
 		}
-		return "redirect:/viewGroups";
+		
+		mod.addAttribute("comments", post.getComments());
+		mod.addAttribute("post", post);
+		return "post_look";
 	}
 	
 }

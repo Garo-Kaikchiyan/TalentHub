@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" 
            uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -26,22 +26,26 @@
 		</form>
 	</div>
 	<div class="bodyx">
-	<br>
-		<img src="${loggedUser.photo }" align="right"/>
 		<div id="form4" class="bodyx">
-		Logged as:
 		<form action=changeProfile method="post">
-			<input placeholder="${loggedUser.firstName } ${loggedUser.lastName}" type="text" id="mailbox" name="name" readonly /><br>
-			<input placeholder="${loggedUser.email }" type="text" id="mailbox" name="email" readonly /><br>
-			Change or add your: 
-			<input placeholder="Password" type="text" id="mailbox" name="password" /><br> 
-			<input placeholder="Twitter account" type="text" id="mailbox" name="twitter_account" /><br> 
-			<input placeholder="Github account" type="text" id="mailbox" name="github_account" /><br> 
-			<input placeholder="Stackoverflow account" type="text" id="mailbox" name="stackoverflow_account" /><br>
-			<input placeholder="Picture URL" type="text" id="mailbox" name="photo_url" /><br>
-			<input type="submit" value="Submit">
-		</form>
+			Change your: <input placeholder="Password" type="text"
+				id="mailbox" name="password"/><br>
+				<input
+				placeholder="Twitter account" type="text" id="mailbox"
+				name="twitter_account" /><br> <input
+				placeholder="Github account" type="text" id="mailbox"
+				name="github_account" /><br> <input
+				placeholder="Stackoverflow account" type="text" id="mailbox"
+				name="stackoverflow_account" /><br>
+				<input
+				placeholder="Photo URL" type="text" id="mailbox"
+				name="photo_url" /><br>
+				<input type="submit" value="Submit">
+			</form>
+			<div id="form4" class="bodyx">
+			<img src="${loggedUser.photo}">
 		</div>
+	</div>
 	</div>
 </body>
 </html>

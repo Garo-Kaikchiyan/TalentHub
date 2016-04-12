@@ -29,8 +29,7 @@ class DBUserDAO implements IUserDAO {
 
 	@Override
 	public void addUser(User newUser) throws SQLException{
-		String query = "INSERT INTO talenthub.users (user_email, user_password, first_name, "
-				+ "last_name, gender, birth_date, user_photo) VALUES (?, SHA1(?), ?, ?, ?, ?, ?);";
+		String query = "INSERT INTO talenthub.users (user_email, user_password, first_name, last_name, gender, birth_date, user_photo) VALUES (?, SHA1(?), ?, ?, ?, ?, ?);";
 		
 		PreparedStatement st = manager.getConnection().prepareStatement(query);
 			st.setString(1, newUser.getEmail());
@@ -82,18 +81,17 @@ class DBUserDAO implements IUserDAO {
 
 	@Override
 	public User validateUser(String userEmail, String userPassword) throws SQLException {
-		String query = "SELECT first_name, last_name, user_email, gender, birth_date, user_photo  FROM users WHERE user_password =SHA1(?);";
-		PreparedStatement st;
-		st = manager.getConnection().prepareStatement(query);
-		st.setString(1, userPassword);
-		ResultSet result = st.executeQuery(query);
+		String query = "SELECT first_name, last_name, user_email, gender, birth_date, user_photo  FROM talenthub.users WHERE user_email = ? AND  user_password = SHA1(?);";
+		PreparedStatement st = manager.getConnection().prepareStatement(query);
+		st.setString(1, userEmail);
+		st.setString(2, userPassword);
+		ResultSet result = st.executeQuery();
 		if (result.next()) {
-			if (result.getString(3).equals(userEmail)) {
-				User user = new User(result.getString(1), result.getString(2), result.getString(3), userPassword,
-						result.getString(4), result.getDate(5));
-				user.setPhoto(result.getString(6));
-				return user;
-			}
+			User user = new User(result.getString(1), result.getString(2), result.getString(3), userPassword,
+					result.getString(4), result.getDate(5));
+			user.setPhoto(result.getString(6));
+			st.close();
+			return user;
 		}
 		st.close();
 		return null;
@@ -104,9 +102,10 @@ class DBUserDAO implements IUserDAO {
 		String query = "SELECT user_email FROM users WHERE user_email =?;";
 		PreparedStatement st = manager.getConnection().prepareStatement(query);
 		st.setString(1, userEmail);
-			ResultSet result = st.executeQuery(query);
+			ResultSet rs = st.executeQuery();
+			boolean result = rs.next();
 			st.close();
-			return !result.next();
+			return !result;
 	}
 
 	@Override

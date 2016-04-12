@@ -2,6 +2,8 @@ package com.example.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,11 +22,11 @@ import model.dao.IUserDAO;
 
 @Controller
 public class ForumController {
-	private ArrayList<Question> allJavaQuestions = new ArrayList<>();
-	private ArrayList<Question> allPhpQuestions = new ArrayList<>();
-	private ArrayList<Question> allAndroidQuestions = new ArrayList<>();
-	private ArrayList<Question> allJSQuestions = new ArrayList<>();
-	private ArrayList<User> allUsers = new ArrayList();
+	private static ArrayList<Question> allJavaQuestions = new ArrayList<>();
+	private static ArrayList<Question> allPhpQuestions = new ArrayList<>();
+	private static ArrayList<Question> allAndroidQuestions = new ArrayList<>();
+	private static ArrayList<Question> allJSQuestions = new ArrayList<>();
+	private static ArrayList<User> allUsers = new ArrayList();
 	
 	@RequestMapping(value="/forum", method = RequestMethod.GET) 
 	public String goToForums() {
@@ -68,6 +70,16 @@ public class ForumController {
 		if(allAndroidQuestions.isEmpty())
 			try {
 				allAndroidQuestions = IQuestionDAO.getDAO(DataSource.DB).getAllQuestions("androidForum");
+				Collections.sort(allAndroidQuestions, new Comparator<Question>() {
+
+					@Override
+					public int compare(Question o1, Question o2) {
+						if(o1.getDate_created().compareTo(o2.getDate_created()) > 0) {
+							return 1;
+						} else {
+							return -1;
+						}
+					}});;
 			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("Problem retrieving android forum questions");
@@ -97,7 +109,7 @@ public class ForumController {
 	}
 
 	@RequestMapping(value="/createQuestion", method = RequestMethod.POST) 
-	public String createQuestion(HttpServletRequest req){
+	public String createQuestion(HttpServletRequest req, Model mod){
 		if(req.getSession().getAttribute("loggedUser") == null)
 			return "index";
 		User autor = (User) req.getSession().getAttribute("loggedUser");
@@ -113,7 +125,10 @@ public class ForumController {
 			System.out.println("Error adding question in " + forum);
 			return "errorPage";
 		}
-		return "redirect:/" + forum;
+
+		mod.addAttribute("answers", question.getAnswers());
+		mod.addAttribute("question", question);
+		return "forum_look";
 	}
 	
 	@RequestMapping(value="/thread", method = RequestMethod.GET)
@@ -139,7 +154,6 @@ public class ForumController {
 			mod.addAttribute("forumName", "JavaScript Forum");
 			break;
 		}
-		if(question.getAnswers().isEmpty()){
 			try {
 				question.setAnswers(IAnswerDAO.getDAO(model.dao.IAnswerDAO.DataSource.DB).getAllAnswers(question));
 			} catch (SQLException e) {
@@ -147,8 +161,7 @@ public class ForumController {
 				e.printStackTrace();
 				return "errorPage";
 			}
-		}
-
+		question.setOwner(getUserByEmail(question.getUser_email()));
 		mod.addAttribute("answers", question.getAnswers());
 		mod.addAttribute("question", question);
 		return "forum_look";
@@ -174,12 +187,13 @@ public class ForumController {
 			answer.setOwner(getUserByEmail(answer.getUser_email()));
 			question.addAnswer(answer);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Error adding answer");
 			return "errorPage";
 		}
-		return "redirect:/" + req.getSession().getAttribute("forum").toString();
+		mod.addAttribute("question", question);
+		mod.addAttribute("answers", question.getAnswers());
+		return "forum_look";
 	}
 	
 	private void addQuestionToList(String type, Question q){
@@ -200,7 +214,7 @@ public class ForumController {
 		}
 	}
 	
-	private User getUserByEmail(String email){
+	public static User getUserByEmail(String email){
 		if(allUsers.isEmpty()){
 			try {
 				allUsers.addAll(IUserDAO.getDAO(model.dao.IUserDAO.DataSource.DB).getAllUsers());
@@ -214,6 +228,16 @@ public class ForumController {
 			if(allUsers.get(i).getEmail().equals(email))
 				return allUsers.get(i);
 		return null;
+	}
+	
+	public static void reloadUsers(){
+			try {
+				allUsers.clear();
+				allUsers.addAll(IUserDAO.getDAO(model.dao.IUserDAO.DataSource.DB).getAllUsers());
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error with setUsers()");
+			}
 	}
 	
 

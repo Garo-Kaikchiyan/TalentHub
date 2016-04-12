@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.example.controller.ForumController;
+
 import model.Group;
 import model.Post;
 import model.User;
@@ -65,7 +67,7 @@ public class DBPostDAO implements IPostDAO {
 //			user.setJsAnswers(rs.getInt("js_answers"));
 //			user.setAndroidAnswers(rs.getInt("android_answers"));
 //			user.setEeAnswers(rs.getInt("ee_answers"));
-//			post.setOwner(user);
+			post.setOwner(ForumController.getUserByEmail(post.getUser_email()));
 			postsByGroup.add(post);
 		}
 		st.close();

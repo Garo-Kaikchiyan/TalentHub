@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.example.controller.ForumController;
 
 import model.Question;
 import model.User;
@@ -60,10 +61,14 @@ public class DBQuestionDAO implements IQuestionDAO {
 	@Override
 	public ArrayList<Question> getAllQuestions(String forumGroup) throws SQLException {
 		ArrayList<Question> questionsFromGroup=new ArrayList<>();
-		String query = "SELECT q.question_title, q.user_email, u.first_name, u.last_name,"
-				+ "q.question_text, q.date_created, u.birth_date, u.gender, u.user_photo,"
-				+ " u.php_answers, u.js_answers, u.android_answers, u.ee_answers FROM talenthub.Questions q,"
-				+ " talenthub.Users u WHERE q.user_email = u.user_email AND q.forum_group = ? ORDER BY q.date_created ASC;";
+//		String query = "SELECT q.question_title, q.user_email, u.first_name, u.last_name,"
+//				+ "q.question_text, q.date_created, u.birth_date, u.gender, u.user_photo,"
+//				+ " u.php_answers, u.js_answers, u.android_answers, u.ee_answers FROM talenthub.Questions q,"
+//				+ " talenthub.Users u WHERE q.user_email = u.user_email AND q.forum_group = ? ORDER BY q.date_created ASC;";
+		
+		String query= "SELECT q.question_title, q.user_email, u.first_name, u.last_name, q.question_text, q.date_created "
+					+ "FROM talenthub.Questions q, talenthub.Users u WHERE q.user_email=u.user_email AND q.forum_group=? "
+					+ "ORDER BY q.date_created ASC;";
 		
 		PreparedStatement st = manager.getConnection().prepareStatement(query);
 		
@@ -82,7 +87,7 @@ public class DBQuestionDAO implements IQuestionDAO {
 //			u.setAndroidAnswers(rs.getInt(12));
 //			u.setEeAnswers(rs.getInt(13));
 //			u.setAllForumEntrys(IUserDAO.getDAO(model.dao.IUserDAO.DataSource.DB).calculateAllPosts(u)); 
-//			q.setOwner(u);
+			question.setOwner(ForumController.getUserByEmail(question.getUser_email()));
 			questionsFromGroup.add(question);
 		}
 		st.close();

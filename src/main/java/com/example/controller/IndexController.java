@@ -34,31 +34,36 @@ public class IndexController {
 	public String login(HttpServletRequest req, Model model){ 
 		User loggedUser = null;
 		try {
+			System.out.println(req.getParameter("email"));
 			loggedUser = IUserDAO.getDAO(DataSource.DB).validateUser(req.getParameter("email"), req.getParameter("password"));
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in validateUser(String, String)");
-			return "errorPage";  
+			model.addAttribute("invalidUser", "Invalid e-mail or password");
+			return "index";  
 		}
 		if (loggedUser != null){
 			req.getSession().setAttribute("loggedUser", loggedUser);
 			return "main";
 		}
-		else{
-			model.addAttribute("invalidUser", "Invalid e-mail or password");
-			return "index";
-		}
+		model.addAttribute("invalidUser", "Invalid e-mail or password");
+		return "index";  
 	}
 	@RequestMapping(value="/register", method = RequestMethod.POST)
 	public String registerUser(HttpServletRequest req, Model model){
 		String errMsg = validateRegistration(req, model);
 		if(errMsg.equals("")){
-			User u = createUser(req);
-			IUserDAO.getDAO(DataSource.DB).addUser(u);
+			User newUser = createUser(req);
+			try {
+				IUserDAO.getDAO(DataSource.DB).addUser(newUser);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error addin newly registrated user");
+				return "errorPage";
+			}
 			String text = "Hello " + req.getParameter("firstName").toString() + 
 					" !<br>You are successfully registrated at TalentHub";
 			EmailResponse.getInstance().SendEmail(req.getParameter("email").toString(), "Welcome to TalentHub!", text, req);
-			req.getSession().setAttribute("loggedUser", u);
+			req.getSession().setAttribute("loggedUser", newUser);
 			return "main";
 		}
 		else{
@@ -83,9 +88,16 @@ public class IndexController {
 					newPass[i] -= 32;
 			}
 			String pass = new String(newPass);
-			if(IUserDAO.getDAO(DataSource.DB).changeUserPass(req.getParameter("email").toString(), pass))
+			try {
+				IUserDAO.getDAO(DataSource.DB).changeUserPass(req.getParameter("email").toString(), pass);
 				EmailResponse.getInstance().SendEmail(req.getParameter("email").toString(), "Password reset", "Hello user,<br>Your new password is: " + pass, req);
-			return "redirect:/html/generatedPassword.html";
+				return "redirect:/html/generatedPassword.html";
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error in changeUserPass");
+				return "errorPage";
+			}
+				
 		}
 		model.addAttribute("errMsg", "Invalid E-mail");
 		return "forgottenPassword";
@@ -106,10 +118,10 @@ public class IndexController {
 	public String changeProfile(HttpServletRequest req, Model model){
 		if(req.getSession().getAttribute("loggedUser") == null)
 			return "index";
-		User u = (User) req.getSession().getAttribute("loggedUser");
-		if(req.getParameter("password") != null) {
+		User loggedUser = (User) req.getSession().getAttribute("loggedUser");
+		if(!req.getParameter("password").equals("")) {
 			String password = req.getParameter("password");
-			u.setPassword(password);
+			loggedUser.setPassword(password);
 		}
 		/*	if(req.getParameter("twitter_account") != null) {
 			String twitterAccount = req.getParameter("twitter_account");
@@ -123,20 +135,35 @@ public class IndexController {
 			String stackoverflowAccount = req.getParameter("stackoverflow_account");
 			u.setStackOverflowAccount(stackoverflowAccount);
 		} */
-		if(req.getParameter("photo_url") != null) {
+		if(!req.getParameter("photo_url").equals("")) {
 			String photo = req.getParameter("photo_url");
-			u.setPhoto(photo);
+			loggedUser.setPhoto(photo);
 		}
-		IUserDAO.getDAO(DataSource.DB).updateUser(u);
-		req.getSession().setAttribute("loggedUser", u);
+		try {
+			IUserDAO.getDAO(DataSource.DB).updateUser(loggedUser);
+			req.getSession().setAttribute("loggedUser", loggedUser);
+			ForumController.reloadUsers();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in updateUser");
+			return "errorPage";
+		}
 		return "main";	
 	}
+	
 	@RequestMapping(value="/getProfile", method = RequestMethod.POST)
 	public String getProfile(HttpServletRequest req, Model model){
 		if(req.getSession().getAttribute("loggedUser") == null)
 			return "index";
-		User u = IUserDAO.getDAO(DataSource.DB).getUser(req.getParameter("user"));
-		model.addAttribute("user", u);
+		User user = null;
+		try {
+			user = IUserDAO.getDAO(DataSource.DB).getUser(req.getParameter("user"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in getUser()");
+			return "errorPage";
+		}
+		model.addAttribute("user", user);
 		return "profile";
 	}
 	
@@ -153,9 +180,16 @@ public class IndexController {
 			return "Please enter your last name";
 		if(req.getParameter("email").toString().equals(""))	
 			return "Please enter your e-mail address";
-		else if(!IUserDAO.getDAO(DataSource.DB).validateUser(req.getParameter("email").toString())){
-			return "E-mail already in use";
-		}
+		else
+			try {
+				if(!IUserDAO.getDAO(DataSource.DB).validateUser(req.getParameter("email").toString())){
+					return "E-mail already in use";
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error in validateRegistration()");
+				return "errorPage";
+			}
 		if(req.getParameter("email2").toString().equals(""))	
 			return "Please confirm your e-mail address";
 		if(!req.getParameter("email").toString().equals(req.getParameter("email2").toString()))
@@ -177,6 +211,12 @@ public class IndexController {
 	}
 	
 	private boolean validateUser(String email) {
-		return IUserDAO.getDAO(DataSource.DB).validateUser(email);
+		try {
+			return IUserDAO.getDAO(DataSource.DB).validateUser(email);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println();
+			return false;
+		}
 	}
 }

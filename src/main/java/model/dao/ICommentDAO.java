@@ -15,7 +15,7 @@ public interface ICommentDAO {
 
 	boolean addComment(Post post,Comment comment,User newUser);
 
-	ArrayList<Comment> getAllComments(User user) throws SQLException;
+	//ArrayList<Comment> getAllComments(User user) throws SQLException;
 	ArrayList<Comment> getAllComments(Post post) throws SQLException;
 	
 
